@@ -32,6 +32,7 @@ class blogPost extends turboObject{
 		$oUser = new user();
 		$oUser->loadByID($this->getUserID());
 		$insertedXML.= CreateTag("Author",$oUser->getXML());
+		$insertedXML.= CreateTag("PublicationDate",arrayToXML(getHumanDateArray($this->getPublished_Date(),true)));
 		return parent::getXML($wrapperName,$insertedXML);
 	}
 }

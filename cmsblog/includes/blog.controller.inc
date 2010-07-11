@@ -5,7 +5,7 @@ class blogController extends genericController{
 	}
 	public function latestBlogs($num = 5){
 		
-		$this->populateFromSQL("SELECT * FROM blogposts ORDER BY published_date, title LIMIT $num");
+		$this->populateFromSQL("SELECT * FROM blogposts ORDER BY published_date DESC, title LIMIT $num");
 		$arrayOfBlogs =  $this->getObjectArray();
 		
 		return $arrayOfBlogs;
