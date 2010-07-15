@@ -5,7 +5,7 @@ class blogController extends genericController{
 	}
 	public function latestBlogs($num = 5){
 		
-		$this->populateFromSQL("SELECT * FROM blogposts ORDER BY published_date DESC, title LIMIT $num");
+		$this->populateFromSQL("SELECT * FROM blogposts WHERE published_state = 1 ORDER BY published_date DESC, title LIMIT $num");
 		$arrayOfBlogs =  $this->getObjectArray();
 		
 		return $arrayOfBlogs;
@@ -14,7 +14,7 @@ class blogController extends genericController{
 	public function getByIDFromDB($id){
 		$this->populateFromSQL(
 			sprintf(
-				"SELECT * FROM blogposts WHERE id = '%d'",
+				"SELECT * FROM blogposts WHERE id = '%d' AND published_state = 1 ",
 				$id
 			)
 		);
@@ -29,6 +29,7 @@ class blogController extends genericController{
 					JOIN users u
 					  ON u.id = bp.userid
 					WHERE u.username = '%s'
+					AND published_state = 1 
 				",
 				$auth
 			)

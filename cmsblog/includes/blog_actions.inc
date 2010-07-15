@@ -25,15 +25,20 @@ class blogModule{
 	function action_search_by_author($variables){
 		$arrayOfBlogs = $this->blogController->getByAuthor($variables[1]);
 		
+		//Load the author's object.
+		$oUser = new User();
+		$oUser->loadByUsername($variables[1]);
+		
+		
 		$responce = new PluginResponce();
-		$responce->pageTitle = 'Blog posts by {$variables[1]}';
+		$responce->pageTitle = "Blog posts by {$oUser->getFirstname()} {$oUser->getSurname()}";
 		$responce->xsl = 'blog-list.xsl';
 		foreach($arrayOfBlogs as $blog){
 			//print_r_html($blog);
 			$blogsxml .= CreateTag("Blog",$blog->getXML());
 		}
 		$responce->xml.= CreateTag("Blogs",$blogsxml);
-		$responce->xml.= CreateTag("BlogPageTitle","Blog posts by {$variables[1]}");
+		$responce->xml.= CreateTag("BlogPageTitle","Blog posts by {$oUser->getFirstname()} {$oUser->getSurname()}");
 		return $responce;
 	}
 	
@@ -49,7 +54,6 @@ class blogModule{
 	}
 }
 
-PluginController::bind('blog',array('blogModule','default'));
-PluginController::bind('blog/post/([0-9]+)_(.*)',array('blogModule','read_one'));
-PluginController::bind('blog/author/(.*)', array("blogModule",'search_by_author'));
+
+
 

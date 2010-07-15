@@ -1,4 +1,9 @@
 <?php 
+
+define("BLOG_STATE_UNPUBLISHED",	0);
+define("BLOG_STATE_PUBLISHED",		1);
+define("BLOG_STATE_DELETED",		2);
+
 class blogPost extends turboObject{
 	public function __construct(){
 		$this->arrTable = array(
@@ -7,21 +12,25 @@ class blogPost extends turboObject{
 				"isKey"			=> TRUE
 			),
 			"userid" => array(
-				"type"	=> "int",
-				"length" =>10
+				"type"			=> "int",
+				"length" 		=> 10
 			),
 			"title" => array(
-				"type"	=> "text",
-				"length" =>255
+				"type"			=> "text",
+				"length" 		=> 255
 			),
 			"article" => array(
-				"type"	=> "text",
-				"length" =>STR_LEN_INF,
-				"force-escape" => TRUE
+				"type"			=> "text",
+				"length" 		=> STR_LEN_INF,
+				"force-escape" 	=> TRUE
 			),
 			"published_date"=>array(
-				"type" => "int",
-				"length" =>10
+				"type" 			=> "int",
+				"length" 		=> 10
+			),
+			"published_state"=>array(
+				"type" 			=> "int",
+				"length"		=> 1
 			)
 		);
 		parent::__construct('blogposts',$this->arrTable);
