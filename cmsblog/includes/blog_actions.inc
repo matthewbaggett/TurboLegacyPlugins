@@ -57,7 +57,7 @@ class blogModule{
 		$responce->pageTitle = "RSS FEED";
 		$responce->xsl = '../plugins/blog/xsl/rss.xsl';
 		
-		$arrayOfBlogs = $this->blogController->getAll();
+		$arrayOfBlogs = $this->blogController->getAll(100);
 		foreach($arrayOfBlogs as $blog){
 			//print_r_html($blog);
 			$blogsxml .= CreateTag("Blog",$blog->getXML());

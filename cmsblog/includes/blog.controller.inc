@@ -37,13 +37,15 @@ class blogController extends genericController{
 	
 		return $this->objectStore;
 	}
-	public function getAll(){
+	public function getAll($limit = 50){
 		$this->clearStore();
 		$this->populateFromSQL(
 				"
 					SELECT bp.*
 					FROM blogposts bp
 					WHERE bp.published_state = 1 
+					ORDER BY published_date DESC
+					LIMIT $limit
 				"
 		);
 	
