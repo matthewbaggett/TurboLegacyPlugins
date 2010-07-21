@@ -11,11 +11,11 @@ require_once("includes/blog.controller.inc");
 require_once("includes/blog_actions.inc");
 require_once("includes/blog.backend.inc");
 
-PluginController::bind('blog',array('blogModule','default'));
-PluginController::bind('blog/rss',array('blogModule','rss'));
-PluginController::bind('blog/rss.xml',array('blogModule','rss'));
-PluginController::bind('blog/post/([0-9]+)_(.*)',array('blogModule','read_one'));
-PluginController::bind('blog/author/(.*)', array("blogModule",'search_by_author'));
+PluginController::bind('blog',						array('blogModule','default'));
+PluginController::bind('blog/rss',					array('blogModule','rss'));
+PluginController::bind('blog/rss.xml',				array('blogModule','rss'));
+PluginController::bind('blog/post/([0-9]+)_(.*)',	array('blogModule','read_one'));
+PluginController::bind('blog/author/(.*)', 			array("blogModule",'search_by_author'));
 
 $nav = new NaviPage("Blog","plugin_blog_list");
 $nav->addChild(new NaviPage("New Post","plugin_blog_new"));
