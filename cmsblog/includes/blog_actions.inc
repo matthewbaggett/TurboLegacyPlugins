@@ -52,6 +52,19 @@ class blogModule{
 		
 		return $responce;
 	}
+	function action_rss($variables){
+		$responce = new PluginResponce();
+		$responce->pageTitle = "RSS FEED";
+		$responce->xsl = '../plugins/blog/xsl/rss.xsl';
+		
+		$arrayOfBlogs = $this->blogController->getAll();
+		foreach($arrayOfBlogs as $blog){
+			//print_r_html($blog);
+			$blogsxml .= CreateTag("Blog",$blog->getXML());
+		}
+		$responce->xml.= CreateTag("Blogs",$blogsxml);
+		return $responce;
+	}
 }
 
 

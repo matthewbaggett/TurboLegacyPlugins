@@ -37,5 +37,17 @@ class blogController extends genericController{
 	
 		return $this->objectStore;
 	}
+	public function getAll(){
+		$this->clearStore();
+		$this->populateFromSQL(
+				"
+					SELECT bp.*
+					FROM blogposts bp
+					WHERE bp.published_state = 1 
+				"
+		);
+	
+		return $this->objectStore;
+	}
 }
 
