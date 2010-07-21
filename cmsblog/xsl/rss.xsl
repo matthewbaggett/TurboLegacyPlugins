@@ -27,7 +27,7 @@
 		<xsl:variable name="url"><xsl:value-of select="/XML/Turbo/Rootpath"/>plugin/blog/post/<xsl:value-of select="URL"/></xsl:variable>
 		<item>
 			<title><xsl:value-of select="title"/><xsl:text> </xsl:text></title>
-			<description><xsl:value-of select="substring(article,300)"/><xsl:text> </xsl:text></description>
+			<description><xsl:value-of select="substring(article,0,300)"/><xsl:text> </xsl:text></description>
 			<link><xsl:value-of select="$url"/></link>
 			<guid isPermaLink="true"><xsl:value-of select="$url"/></guid>
 			<pubDate><xsl:value-of select="PublicationDate/RFC_2822"/></pubDate>

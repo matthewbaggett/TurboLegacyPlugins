@@ -11,6 +11,7 @@ require_once("includes/blog.controller.inc");
 require_once("includes/blog_actions.inc");
 require_once("includes/blog.backend.inc");
 
+//Bind plugin routes...
 PluginController::bind('blog',						array('blogModule','default'));
 PluginController::bind('blog/rss',					array('blogModule','rss'));
 PluginController::bind('blog/rss.xml',				array('blogModule','rss'));
