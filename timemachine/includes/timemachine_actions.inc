@@ -1,70 +1,46 @@
 <?php
-class blogModule{
-	private $blogController;
+class timemachineModule{
 	
 	public function __construct(){
-		$this->blogController = new blogController();
 	}
-	
+	/*
+	 * The default action
+	 */
 	function action_default(){
-		$arrayOfBlogs = $this->blogController->latestBlogs(10);
 		
 		$responce = new PluginResponce();
-		$responce->pageTitle = 'Blog';
-		$responce->xsl = 'blog-list.xsl';
-		
-		foreach($arrayOfBlogs as $blog){
-			//print_r_html($blog);
-			$blogsxml .= CreateTag("Blog",$blog->getXML());
-		}
-		$responce->xml = CreateTag("Blogs",$blogsxml);
-		$responce->xml.= CreateTag("BlogPageTitle","Latest posts");
+		die("Doop, time machine");
 		return $responce;
+	}
+	/*
+	 * Function to get a specific version of a specific page
+	 */
+	function action_version_get($variables){
+		$result = new PluginResponce();
+		
+		$uuid = $variables[1];
+		$version = $variables[2];
+		print_r($variables);
+		$sql = sprintf(
+			"SELECT * FROM pages WHERE pageuuid = '%s' AND version = '%d' LIMIT 1",
+			DB::escape_string($uuid),
+			DB::escape_number($version)
+		);
+		echo $sql;
+		$result = DB::Query($sql);
+		echo "<b>Found ".DB::rows($result)." rows()</b><br />";
+		if(DB::rows($result)){
+			$row = DB::result_array($result);
+			$oPage = new page();
+			$oPage->loadByRow($row);
+			$result->pageTitle = $oPage->getPageName();
+			$result->xml = $oPage->getXML();
+		}
+		return $result;
+		
 	}
 	
-	function action_search_by_author($variables){
-		$arrayOfBlogs = $this->blogController->getByAuthor($variables[1]);
-		
-		//Load the author's object.
-		$oUser = new User();
-		$oUser->loadByUsername($variables[1]);
-		
-		
-		$responce = new PluginResponce();
-		$responce->pageTitle = "Blog posts by {$oUser->getFirstname()} {$oUser->getSurname()}";
-		$responce->xsl = 'blog-list.xsl';
-		foreach($arrayOfBlogs as $blog){
-			//print_r_html($blog);
-			$blogsxml .= CreateTag("Blog",$blog->getXML());
-		}
-		$responce->xml.= CreateTag("Blogs",$blogsxml);
-		$responce->xml.= CreateTag("BlogPageTitle","Blog posts by {$oUser->getFirstname()} {$oUser->getSurname()}");
-		return $responce;
-	}
 	
-	function action_read_one($variables){
-		$blogPost = $this->blogController->getById($variables[1]);
-		
-		$responce = new PluginResponce();
-		$responce->pageTitle = 'Blog';
-		$responce->xsl = 'blog-read-one.xsl';
-		$responce->xml.= CreateTag("Blog",$blogPost->getXML());
-		
-		return $responce;
-	}
-	function action_rss($variables){
-		$responce = new PluginResponce();
-		$responce->pageTitle = "RSS FEED";
-		$responce->xsl = '../plugins/blog/xsl/rss.xsl';
-		
-		$arrayOfBlogs = $this->blogController->getAll(100);
-		foreach($arrayOfBlogs as $blog){
-			//print_r_html($blog);
-			$blogsxml .= CreateTag("Blog",$blog->getXML());
-		}
-		$responce->xml.= CreateTag("Blogs",$blogsxml);
-		return $responce;
-	}
 }
 
 

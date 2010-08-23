@@ -11,6 +11,8 @@ require_once("includes/timemachine_actions.inc");
 
 //Bind plugin routes...
 PluginController::bind('timemachine',				array('timemachineModule','default'));
+PluginController::bind('timemachine/list/(.*)',		 	array("timemachineModule",'version_list'));
+PluginController::bind('timemachine/version/(.*)/(.*)', 	array("timemachineModule",'version_get'));
 /*
 PluginController::bind('blog/rss',					array('blogModule','rss'));
 PluginController::bind('blog/rss.xml',				array('blogModule','rss'));
