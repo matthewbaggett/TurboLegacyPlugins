@@ -1,5 +1,5 @@
 <?php
-class timemachineModule{
+class statisticsModule{
 	
 	public function __construct(){
 	}
@@ -52,6 +52,13 @@ class timemachineModule{
 			header("Location: ".ROOTPATH."/turbo");
 		}
 		
+	}
+	
+	function action_logThisRequest($args){
+		$oRequest = new loggedPath();
+		print_r_html($_SERVER);die();
+		$oRequest->setPath($_SERVER['REQUEST_URI']);
+		$oRequest->setHandler($_SERVER['SCRIPT_NAME'])
 	}
 	
 	

@@ -6,23 +6,27 @@ $oldcwd = getcwd();	//Where is cwd now...
 $myLocation = dirname(__FILE__);	//Move to where we are right now...
 chdir($myLocation);
 
-require_once("includes/timemachine.inc");
-require_once("includes/timemachine_actions.inc");
+require_once("includes/statistics.inc");
+require_once("includes/statistics_actions.inc");
+
+require_once("objects/loggedPath.inc");
 
 //Bind plugin routes...
-PluginController::bind('timemachine',				array('timemachineModule','default'));
-PluginController::bind('timemachine/list/(.*)',		 	array("timemachineModule",'version_list'));
-PluginController::bind('timemachine/version/(.*)/(.*)', 	array("timemachineModule",'version_get'));
+PluginController::bind('statistics',				array('statisticsModule','default'));
+
+//Add plugin events...
+EVENTS::addEvent_EveryTime_Start(					array('statisticsModule','logThisRequest'));
+
 /*
-PluginController::bind('blog/rss',					array('blogModule','rss'));
-PluginController::bind('blog/rss.xml',				array('blogModule','rss'));
-PluginController::bind('blog/post/([0-9]+)_(.*)',	array('blogModule','read_one'));
-PluginController::bind('blog/author/(.*)', 			array("blogModule",'search_by_author'));
+PluginController::bind('blog/rss',					array('statisticsModule','rss'));
+PluginController::bind('blog/rss.xml',				array('statisticsModule','rss'));
+PluginController::bind('blog/post/([0-9]+)_(.*)',	array('statisticsModule','read_one'));
+PluginController::bind('blog/author/(.*)', 			array("statisticsModule",'search_by_author'));
 */
 
-$nav = new NaviPage("Timemachine",			"plugin_timemachine_list");
-$nav->addChild(new NaviPage("New Post",		"plugin_timemachine_new"));
-$nav->addChild(new NaviPage("List Posts",	"plugin_timemachine_list"));
+$nav = new NaviPage("Statistics",			"plugin_statistics_list");
+
+$nav->addChild(new NaviPage("PageViews",	"plugin_statistics_pageviews_list"));
 
 PluginController::addAdminNavigation($nav);
 
