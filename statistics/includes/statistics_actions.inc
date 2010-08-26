@@ -54,13 +54,32 @@ class statisticsModule{
 		
 	}
 	
-	function action_logThisRequest($args){
+	function action_logThisRequest($args = null){
 		$oRequest = new loggedPath();
-		print_r_html($_SERVER);die();
+		//print_r_html($_SERVER);die();
 		$oRequest->setPath($_SERVER['REQUEST_URI']);
-		$oRequest->setHandler($_SERVER['SCRIPT_NAME'])
+		$oRequest->setHandler($_SERVER['SCRIPT_NAME']);
+		
+		$oRequest->setUserId();
+		$oRequest->save();
 	}
 	
+	
+	function action_clear_logs($args = null){
+		$oRequest = new loggedPath();
+		$oRequest->destroyTable();
+		$to = implode(", ",TURBO::getAdminEmails());
+		$subject = "CRON: Logs cleared";
+		$message = "The view logs were cleared at ".date(DEFAULT_DATE_COMPACT)." automatically.";
+		mail($to, $subject, $message, null);
+	}
+	
+	function action_be_pissing_annoying($args = null){
+		$to = implode(", ",TURBO::getAdminEmails());
+		$subject = "CRON: Test cron job";
+		$message = "Fnar sent at  ".date(DEFAULT_DATE_COMPACT)." automatically.";
+		mail($to, $subject, $message, null);
+	}
 	
 }
 
