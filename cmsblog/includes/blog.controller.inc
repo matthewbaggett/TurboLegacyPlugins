@@ -12,6 +12,7 @@ class blogController extends genericController{
 	}
 
 	public function getByIDFromDB($id){
+		
 		$this->populateFromSQL(
 			sprintf(
 				"SELECT * FROM blogposts WHERE id = '%d' AND published_state = 1 ",

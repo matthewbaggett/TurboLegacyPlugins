@@ -49,7 +49,6 @@ class blogModule{
 		$responce->pageTitle = 'Blog';
 		$responce->xsl = 'blog-read-one.xsl';
 		$responce->xml.= CreateTag("Blog",$blogPost->getXML());
-		
 		return $responce;
 	}
 	function action_rss($variables){
