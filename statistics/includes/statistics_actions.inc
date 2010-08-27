@@ -68,17 +68,24 @@ class statisticsModule{
 	function action_clear_logs($args = null){
 		$oRequest = new loggedPath();
 		$oRequest->destroyTable();
-		$to = implode(", ",TURBO::getAdminEmails());
+		$to = TURBO::getAdminEmailsList();
 		$subject = "CRON: Logs cleared";
 		$message = "The view logs were cleared at ".date(DEFAULT_DATE_COMPACT)." automatically.";
-		mail($to, $subject, $message, null);
+		$this->sendCronMail($subject, $message);
 	}
 	
 	function action_be_pissing_annoying($args = null){
-		$to = implode(", ",TURBO::getAdminEmails());
+		$to = TURBO::getAdminEmailsList();
 		$subject = "CRON: Test cron job";
-		$message = "Fnar sent at  ".date(DEFAULT_DATE_COMPACT)." automatically.";
-		mail($to, $subject, $message, null);
+		$message = "Annoyance sent at  ".date(DEFAULT_DATE_COMPACT)." automatically.";
+		$this->sendCronMail($subject, $message);
+	}
+	function sendCronMail($subject, $message){
+		$admins = TURBO::getAdminEmailsList();
+		$headers = 'From: cron@'.$_SERVER['HTTP_HOST'] . "\r\n" .
+    		'Reply-To: '.$admins[0]."\r\n" .
+    		'X-Mailer: PHP/' . phpversion();
+		mail(TURBO::getAdminEmailsList(), $subject, $message, null);
 	}
 	
 }
