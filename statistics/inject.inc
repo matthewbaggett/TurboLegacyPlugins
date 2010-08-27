@@ -20,10 +20,12 @@ EVENTS::addEvent('cron_day',array(
 	'module'=>'statisticsModule',
 	'function'=>'action_clear_logs')
 );
+/*
 EVENTS::addEvent('cron_minute',array(
 	'module'=>'statisticsModule',
 	'function'=>'action_be_pissing_annoying')
 );
+*/
 
 
 
