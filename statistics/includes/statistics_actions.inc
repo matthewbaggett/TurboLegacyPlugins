@@ -69,6 +69,7 @@ class statisticsModule{
 				$oRequest->setUserId();
 				$oRequest->save();
 		}
+	}
 		
 
 	
