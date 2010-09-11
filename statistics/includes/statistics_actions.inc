@@ -70,8 +70,7 @@ class statisticsModule{
 				$oRequest->save();
 		}
 		
-	}
-	
+
 	
 	function action_clear_logs($args = null){
 		$oRequest = new loggedPath();
@@ -97,7 +96,3 @@ class statisticsModule{
 	}
 	
 }
-
-
-
-
