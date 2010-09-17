@@ -12,6 +12,7 @@ require_once("objects/apikey.inc");
 //Load libraries
 require_once("lib/metabox.inc");
 require_once("lib/metabox.actions.inc");
+require_once("lib/metabox.responce.inc");
 
 //Bind plugin routes...
 PluginController::bind('push',								array('metaboxModule','push'));
