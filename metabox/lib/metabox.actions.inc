@@ -14,15 +14,38 @@ class metaboxModule{
 		
 	}
 	function action_push(){
-		if(self::checkApiKey($_POST['apiKey'])){
-			print_r($_POST);
+		if($oUser = self::checkApiKey($_POST['apiKey'])){
+			//Build the new metabox responce up...
+			$responce = new metaboxResponce();
+			$responce->status = "APIKEY OKAY";
+			$responce->user = $oUser;
+			
+			//Decide what to do with the image
+			if(isset($_POST['imageFile'])){
+				//We download and analyse this one
+				$fileData = curl_file_get_contents($_POST['imageFile']);
+			}else($isAFileUpload){
+				//TODO: Do the file upload logic here
+				$fileData = 'dookie!';
+			}
+			$md5 = md5($fileData);
+			$size = strlen($fileData);
+			
+			//return the responce:
+			return $responce->crunch();
 		}else{
 			return self::failure("Invalid APIKEY");
 		}
 	}
-	static function failure($failure){
-		$responce = metaboxResponce();
-		$responce->
+	static private function failure($failure){
+		$responce = new metaboxResponce();
+		$responce->status = "FAIL";
+		$responce->errorString = $failure;
+		return $responce->crunch();
+	}
+	static private function checkApiKey($key){
+		$oKey = new apikey();
+		return $oKey->loadByKey($key);
 	}
 	
 
