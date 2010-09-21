@@ -1,4 +1,3 @@
-
 <?php 
 //plugin injection script. This gets run just after all the turbo componants are loaded.
 //we need to change the current working directory, then put it back afterwards...
