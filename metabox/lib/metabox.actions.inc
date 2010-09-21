@@ -24,9 +24,13 @@ class metaboxModule{
 			if(isset($_POST['imageFile'])){
 				//We download and analyse this one
 				$fileData = curl_file_get_contents($_POST['imageFile']);
-			}else($isAFileUpload){
+				
+			}elseif($isAFileUpload){
 				//TODO: Do the file upload logic here
 				$fileData = 'dookie!';
+				return self::failure("File uploads not supported yet");
+			}else{
+				return self::failure("No file to process");
 			}
 			$md5 = md5($fileData);
 			$size = strlen($fileData);
