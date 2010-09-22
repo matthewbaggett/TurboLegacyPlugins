@@ -19,7 +19,7 @@ class geoipModule{
 			$oLoggedPath->setPostalCode($location->postal_code);
 			$oLoggedPath->setLatitude($location->latitude);
 			$oLoggedPath->setLongitude($location->longitude);
-			$oLoggedPath->setGeoIPProcessed(1);
+			$oLoggedPath->setgeoipProcessed("1");
 			$oLoggedPath->save();
 			
 		}
