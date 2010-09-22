@@ -24,12 +24,16 @@ class metaboxModule{
 			if(isset($_POST['imageFile'])){
 				//We download and analyse this one
 				$fileData = curl_file_get_contents($_POST['imageFile']);
-				$fileSource = $_POST['imageFile'];				
+				$fileName = $_POST['imageFile'];
+				$fileSource = "scrape";			
+					
 			}elseif($isAFileUpload){
 				//TODO: Do the file upload logic here
 				$fileData = 'dookie!';
+				$fileName = "somefile.png";
 				$fileSource = "upload";
 				return self::failure("File uploads not supported yet");
+				
 			}else{
 				return self::failure("No file to process");
 			}
@@ -48,6 +52,12 @@ class metaboxModule{
 			$image->setSource($fileSource);
 			//Commit the image to the DB
 			$image->save();
+			
+			if(TURBO::PluginAvailable("Twitter")){
+				$oTweet = new Tweet();
+				$oTweet->message = "New image uploaded: ".basename($fileName).".";
+				$oTweet->tweet();
+			}
 			
 			
 			//return the responce:
