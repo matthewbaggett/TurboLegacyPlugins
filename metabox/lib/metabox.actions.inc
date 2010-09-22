@@ -32,8 +32,13 @@ class metaboxModule{
 			}else{
 				return self::failure("No file to process");
 			}
-			$md5 = md5($fileData);
-			$size = strlen($fileData);
+			$md5 		= hash("MD5",	$fileData);
+			$sha 		= hash("SHA1",	$fileData);
+			$size 		= strlen($fileData);
+			$image 		= new metabox_image();
+			$image->uuidGenerate	();
+			$image->setmd5			($md5);
+			$image->setsha1			($sha1);
 			
 			//return the responce:
 			return $responce->crunch();
@@ -41,12 +46,14 @@ class metaboxModule{
 			return self::failure("Invalid APIKEY");
 		}
 	}
+	
 	static private function failure($failure){
 		$responce = new metaboxResponce();
 		$responce->status = "FAIL";
 		$responce->errorString = $failure;
 		return $responce->crunch();
 	}
+	
 	static private function checkApiKey($key){
 		$oKey = new apikey();
 		return $oKey->loadByKey($key);

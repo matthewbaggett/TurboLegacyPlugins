@@ -7,6 +7,7 @@ $myLocation = dirname(__FILE__);	//Move to where we are right now...
 chdir($myLocation);
 
 //Load objects
+require_once("objects/image.inc");
 require_once("objects/apikey.inc");
 
 //Load libraries
