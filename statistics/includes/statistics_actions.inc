@@ -69,6 +69,7 @@ class statisticsModule{
 				//TODO: Make this set the user id when user is logged in.
 				$oRequest->setUserId();
 				$oRequest->setIP($_SERVER['REMOTE_ADDR']);
+				$oRequest->setTime(time());
 				$oRequest->save();
 				fb::info("yo!");
 		}
