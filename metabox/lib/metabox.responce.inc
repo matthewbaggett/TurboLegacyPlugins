@@ -15,7 +15,9 @@ class metaboxResponce{
 		$this->query['get'] 	= $_GET;
 	}
 	function crunch(){
+		global $availablePlugins;
 		$this->responce['server']			= CLUSTER_NODE;
+		$this->responce['plugins']			= $availablePlugins;
 		$this->responce['status'] 			= $this->status;
 		$this->responce['query'] 			= $this->query;
 		$this->responce['error_string'] 	= $this->errorString;
