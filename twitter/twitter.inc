@@ -12,5 +12,5 @@ class Tweet{
 		$twitter->password = "omegaomega";
 		// Update your status
 		$twitter->update('xml',$this->message);
-	
+	}
 }
