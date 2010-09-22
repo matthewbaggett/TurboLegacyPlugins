@@ -11,4 +11,4 @@ require_once("twitter.inc");
 
 chdir($oldcwd);	//Move back to the old cwd.
 
-PluginController::bind('test-twitter',								array('Tweet','tweet'));
+PluginController::bind('test-twitter',								array('Tweet','test'));
