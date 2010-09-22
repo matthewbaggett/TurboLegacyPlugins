@@ -57,9 +57,8 @@ class metaboxModule{
 				$oTweet = new Tweet();
 				$oTweet->message = "New image uploaded: ".basename($fileName).".";
 				$oTweet->tweet();
+				
 			}
-			
-			
 			//return the responce:
 			return $responce->crunch();
 		}else{
