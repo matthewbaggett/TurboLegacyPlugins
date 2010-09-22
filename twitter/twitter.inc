@@ -10,4 +10,8 @@ class Tweet{
 		// Update your status
 		return json_decode($twitter->updateStatus($this->message,null,'json'));
 	}
+	public function test(){
+		$this->message = "Test! abcdefghijklmnopqrstuvwxyz";
+		print_r_html($this->tweet());
+	}
 }
