@@ -5,7 +5,7 @@ class geoipModule{
 	}
 
 	function action_locate_ips(){
-		$sql = "SELECT id,ip FROM loggedpaths WHERE geoipProcessed != 1 AND ip != '127.0.0.1'";
+		$sql = "SELECT id,ip FROM loggedpaths WHERE geoipProcessed != 1 AND city = '' AND ip != '127.0.0.1'";
 		$result = DB::Query($sql);
 		while($row = DB::result_object($result)){
 			$location = GEOIP::seek($row->ip);
