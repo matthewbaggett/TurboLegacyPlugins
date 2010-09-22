@@ -35,7 +35,7 @@ class metabox_image extends turboObject{
 				"type"			=> "int",
 			),
 		);
-		parent::__construct('apikeys',$this->arrTable);
+		parent::__construct('mimages',$this->arrTable);
 	}
 	
 	public function loadByUUID($uuid){
