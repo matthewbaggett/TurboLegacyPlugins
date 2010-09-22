@@ -55,6 +55,7 @@ class statisticsModule{
 	}
 	
 	function action_logThisRequest($args = null){
+		fb::log("Logging this request");
 		$path 		= ltrim($_SERVER['REQUEST_URI'],"/");
 		$handler 	= ltrim($_SERVER['SCRIPT_NAME'],"/");
 		
@@ -67,7 +68,9 @@ class statisticsModule{
 				$oRequest->setHandler($handler);
 				//TODO: Make this set the user id when user is logged in.
 				$oRequest->setUserId();
+				$oRequest->setIP($_SERVER['REMOTE_ADDR']);
 				$oRequest->save();
+				fb::info("yo!");
 		}
 	}
 		
