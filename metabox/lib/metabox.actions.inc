@@ -42,8 +42,8 @@ class metaboxModule{
 			$image->setSHA1($sha);
 			$image->setUserid($oUser->getID());
 			$image->setConstructedBy($oUser->getID());
-			$image->uuid(uuid());
-			$image->size($size);
+			$image->setUUID(uuid());
+			$image->setSize($size);
 			//Commit the image to the DB
 			$image->save();
 			
