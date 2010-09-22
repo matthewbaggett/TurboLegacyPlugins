@@ -35,11 +35,18 @@ class metaboxModule{
 			$md5 		= hash("MD5",	$fileData);
 			$sha 		= hash("SHA1",	$fileData);
 			$size 		= strlen($fileData);
-			$image 		= new metabox_image();
+			//Generate the image
+			$image = new metabox_image();
 			$image->uuidGenerate	();
-			$image->setmd5			($md5);
-			$image->setsha1			($sha1);
+			$image->setMD5($md5);
+			$image->setSHA1($sha);
+			$image->setUserid($oUser->getID());
+			$image->setConstructedBy($oUser->getID());
+			$image->uuid(uuid());
+			$image->size($size);
+			//Commit the image to the DB
 			$image->save();
+			
 			
 			//return the responce:
 			return $responce->crunch();
