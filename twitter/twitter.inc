@@ -1,16 +1,13 @@
 <?php 
 
-class TWITTER extends TwitterApi{
-	
-}
+
 class Tweet{
 	public $message;
 	
 	public function tweet(){
-		$twitter = new TWITTER();
-		$twitter->username = "metaboxupdates";
-		$twitter->password = "omegaomega";
+		$twitter = new TwitterApi('metaboxupdates','omegaomega');
+		
 		// Update your status
-		$twitter->update('xml',$this->message);
+		return json_decode($twitter->updateStatus($this->message,null,'json'));
 	}
 }
