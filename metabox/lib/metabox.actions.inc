@@ -24,10 +24,11 @@ class metaboxModule{
 			if(isset($_POST['imageFile'])){
 				//We download and analyse this one
 				$fileData = curl_file_get_contents($_POST['imageFile']);
-				
+				$fileSource = $_POST['imageFile'];				
 			}elseif($isAFileUpload){
 				//TODO: Do the file upload logic here
 				$fileData = 'dookie!';
+				$fileSource = "upload";
 				return self::failure("File uploads not supported yet");
 			}else{
 				return self::failure("No file to process");
@@ -44,6 +45,7 @@ class metaboxModule{
 			$image->setConstructedBy($oUser->getID());
 			$image->setUUID(uuid());
 			$image->setSize($size);
+			$image->setSource($fileSource);
 			//Commit the image to the DB
 			$image->save();
 			
