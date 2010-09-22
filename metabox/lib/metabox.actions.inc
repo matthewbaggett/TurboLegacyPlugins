@@ -39,6 +39,7 @@ class metaboxModule{
 			$image->uuidGenerate	();
 			$image->setmd5			($md5);
 			$image->setsha1			($sha1);
+			$image->save();
 			
 			//return the responce:
 			return $responce->crunch();
