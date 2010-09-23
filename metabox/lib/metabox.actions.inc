@@ -25,15 +25,19 @@ class metaboxModule{
 				//We download and analyse this one
 				$fileData = curl_file_get_contents($_POST['imageFile']);
 				$fileName = $_POST['imageFile'];
-				$fileSource = "scrape";			
-					
+				$fileSource = "scrape";
+				
+				$oStor = $this->writeImageToDisk($fileData,$fileName);
+				//If writing failed, we'd have got a metaboxResponce back
+				if(get_class($oStor) == 'metaboxResponce'){
+					return $oStor;
+				}
 			}elseif($isAFileUpload){
 				//TODO: Do the file upload logic here
 				$fileData = 'dookie!';
 				$fileName = "somefile.png";
 				$fileSource = "upload";
 				return self::failure("File uploads not supported yet");
-				
 			}else{
 				return self::failure("No file to process");
 			}
@@ -57,12 +61,21 @@ class metaboxModule{
 				$oTweet = new Tweet();
 				$oTweet->message = "New image uploaded: ".basename($fileName).".";
 				$oTweet->tweet();
-				
 			}
 			//return the responce:
 			return $responce->crunch();
 		}else{
 			return self::failure("Invalid APIKEY");
+		}
+	}
+	
+	static private function writeImageToDisk($data,$originalFileName){
+		$name = basename($originalFileName);
+		if(touch(STORAGE_S3_DIRECTORY."/touch")){
+			$storagePath = "%s/%s/%s/%s";
+			$storagePath 
+		}else{
+			return self::failure("Cannot connect to S3/S3-alike");
 		}
 	}
 	
