@@ -50,8 +50,11 @@ class metaboxModule{
 			$sha 		= hash("SHA1",	$fileData);
 			$size 		= strlen($fileData);
 			$tags 		= json_decode($_POST['imageTags']);
+			echo "\n\nPOST:\n";
+			print_r($_POST);
+			echo "\n\nTags:\n";
 			print_r($tags);
-			die("FUCKIT");
+			die("\n\nFUCKIT");
 			
 			//Generate the image
 			$image = new metabox_image();
