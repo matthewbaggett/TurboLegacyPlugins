@@ -51,7 +51,7 @@ class metaboxModule{
 			$size 		= strlen($fileData);
 			$tags 		= json_decode($_POST['imageTags']);
 			echo "\n\nPOST:\n";
-			print_r($_POST);
+			print_r($_POST['imageTags']);
 			echo "\n\nTags:\n";
 			print_r($tags);
 			die("\n\nFUCKIT");
