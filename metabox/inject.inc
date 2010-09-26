@@ -7,8 +7,11 @@ $myLocation = dirname(__FILE__);	//Move to where we are right now...
 chdir($myLocation);
 
 //Load objects
-require_once("objects/image.inc");
 require_once("objects/apikey.inc");
+require_once("objects/failure.inc");
+require_once("objects/image.inc");
+require_once("objects/relation.inc");
+require_once("objects/tag.inc");
 
 //Load libraries
 require_once("lib/metabox.inc");
@@ -19,12 +22,5 @@ require_once("lib/metabox.responce.inc");
 PluginController::bind('push',								array('metaboxModule','push'));
 PluginController::bind('get/(.*)/(.*)/(.*)',		 		array("metaboxModule",'get'));
 PluginController::bind('batch/get', 						array("metaboxModule",'get_batch'));
-/*
-PluginController::bind('blog/rss',					array('blogModule','rss'));
-PluginController::bind('blog/rss.xml',				array('blogModule','rss'));
-PluginController::bind('blog/post/([0-9]+)_(.*)',	array('blogModule','read_one'));
-PluginController::bind('blog/author/(.*)', 			array("blogModule",'search_by_author'));
-*/
-
 
 chdir($oldcwd);	//Move back to the old cwd.
