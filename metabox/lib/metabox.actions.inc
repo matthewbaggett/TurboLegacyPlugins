@@ -51,6 +51,7 @@ class metaboxModule{
 			$size 		= strlen($fileData);
 			$tags 		= json_decode($_POST['imageTags']);
 			print_r($tags);
+			die("FUCKIT");
 			
 			//Generate the image
 			$image = new metabox_image();
