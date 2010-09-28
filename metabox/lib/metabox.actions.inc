@@ -1,9 +1,8 @@
 <?php
 class metaboxModule{
-	private $blogController;
 	
 	public function __construct(){
-		$this->blogController = new blogController();
+
 	}
 	
 	function action_default(){
