@@ -57,9 +57,6 @@ class loggedPath extends turboObject{
 			'geoipProcessed' => array(
 				"type"		=> "int",
 				"length"	=> 1
-			),
-			'time'		=> array(
-				"type"		=> "int"
 			)
 		);
 		parent::__construct('loggedPaths',$this->arrTable);

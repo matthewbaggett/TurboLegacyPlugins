@@ -55,7 +55,8 @@ class statisticsModule{
 	}
 	
 	function action_logThisRequest($args = null){
-		fb::log("Logging this request");
+		global $oFUser;	//Grab the FrontendUser object.
+		
 		$path 		= ltrim($_SERVER['REQUEST_URI'],"/");
 		$handler 	= ltrim($_SERVER['SCRIPT_NAME'],"/");
 		
@@ -66,12 +67,23 @@ class statisticsModule{
 				$oRequest 	= new loggedPath();
 				$oRequest->setPath($path);
 				$oRequest->setHandler($handler);
-				//TODO: Make this set the user id when user is logged in.
-				$oRequest->setUserId();
+				
+				//Make this set the user id when user is logged in.
+				if(is_object($oFUser)){
+					$oRequest->setUserId($oFUser->getId());
+				}
+				
+				//Add the IP to the request
 				$oRequest->setIP($_SERVER['REMOTE_ADDR']);
-				$oRequest->setTime(time());
-				$oRequest->save();
-				fb::info("yo!");
+				
+				//TODO: If possible, use HTML5 to get the location information
+				
+				//Save & Reload the object.
+				$oRequest->save(); 
+				$oRequest->reload();
+				
+				//Some debug about this request
+				fb::log("Logging this request... Request #{$oRequest->getID()} from {$oRequest->getIP()}");
 		}
 	}
 		
