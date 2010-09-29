@@ -7,7 +7,8 @@ $myLocation = dirname(__FILE__);	//Move to where we are right now...
 chdir($myLocation);
 
 require_once("includes/statistics.inc");
-require_once("includes/statistics_actions.inc");
+require_once("includes/statistics.actions.inc");
+require_once("includes/statistics.backend.inc");
 
 require_once("objects/loggedPath.inc");
 
@@ -23,7 +24,7 @@ EVENTS::addEvent('cron_day',array(
 
 
 $nav = new NaviPage("Statistics",			false);
-$nav->addChild(new NaviPage("Page Views",	"plugin_statistics_pageviews_list"));
+$nav->addChild(new NaviPage("Page Views",	"plugin_statistics_pageviews"));
 
 PluginController::addAdminNavigation($nav);
 
