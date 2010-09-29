@@ -84,7 +84,14 @@ class statisticsModule{
 				
 				//Some debug about this request
 				fb::log("Logging this request... Request #{$oRequest->getID()} from {$oRequest->getIP()}");
+				
+				//If the GEOIP plugin is installed, add the geoip tracker JS
+				if(TURBO::PluginAvailable('geoip')){
+					TURBO::add_js_var('request_id',$oRequest->getID());
+					TURBO::add_js("plugins/geoip/js/gps.js");
+				}
 		}
+		
 	}
 		
 
