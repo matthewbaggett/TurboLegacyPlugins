@@ -88,7 +88,7 @@ class statisticsModule{
 				//If the GEOIP plugin is installed, add the geoip tracker JS
 				if(TURBO::PluginAvailable('geoip')){
 					TURBO::add_js_var('request_id',$oRequest->getID());
-					TURBO::add_js("plugins/geoip/js/gps.js");
+					TURBO::add_js_file("plugins/geoip/js/gps.js");
 				}
 		}
 		
