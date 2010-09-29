@@ -1,11 +1,14 @@
 function turboGPSsuccess(position){
 	//console.info("Position found: " + position.coords.latitude + " by " + position.coords.longitude);
 	$.post(
-		root_path + "/log-position", 
+		gps_feed_location, 
 		{
 			lat: position.coords.latitude, 
 			long: position.coords.longitude, 
 			requestid: request_id
+		},
+		function(){
+			alert("Transmitted data");
 		}
 	);
 	alert("GPS success! At: " + position.coords.latitude + " by " + position.coords.longitude)

@@ -24,4 +24,15 @@ class geoipModule{
 			
 		}
 	}
+	
+	function action_locate_html5(){
+		$oLoggedPath = new LoggedPath();
+		$oLoggedPath->loadByID($_POST['requestid']);
+		$oLoggedPath->setLatitude($_POST['lat']);
+		$oLoggedPath->setLongitude($_POST['long']);
+		$oLoggedPath->save();
+		$oLoggedPath->reload();
+		print_r_html($oLoggedPath->getSimpleObject());
+		exit;
+	}
 }
