@@ -18,4 +18,5 @@ EVENTS::addEvent('cron_quarter',array(
 );
 
 
+
 PluginController::bind('geoip_locate_ips',	array('geoipModule','locate_ips'));
