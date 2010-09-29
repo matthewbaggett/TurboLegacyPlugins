@@ -13,8 +13,13 @@ class statisticsBackendModule{
 				SELECT count(p.id), p.*
 				FROM loggedpaths p
 				GROUP BY p.path
+				ORDER BY count(p.id) DESC
 				";
-		$results = DB::Query($sql,"Statistics Plugin - Action pageviews");
+		$results = DB::Query($sql,"Statistics Plugin - action_pageviews");
+		
+		while($row = DB::result_object($results)){
+			print_r($row);
+		}
 		exit;
 	}
 }
