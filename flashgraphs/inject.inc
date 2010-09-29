@@ -6,5 +6,7 @@ $oldcwd = getcwd();	//Where is cwd now...
 $myLocation = dirname(__FILE__);	//Move to where we are right now...
 chdir($myLocation);
 
+require_once('./lib/OFC/OFC_Chart.php');
+
 
 chdir($oldcwd);	//Move back to the old cwd.
