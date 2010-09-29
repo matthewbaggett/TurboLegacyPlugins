@@ -20,25 +20,10 @@ EVENTS::addEvent('cron_day',array(
 	'module'=>'statisticsModule',
 	'function'=>'action_clear_logs')
 );
-/*
-EVENTS::addEvent('cron_minute',array(
-	'module'=>'statisticsModule',
-	'function'=>'action_be_pissing_annoying')
-);
-*/
 
 
-
-/*
-PluginController::bind('blog/rss',					array('statisticsModule','rss'));
-PluginController::bind('blog/rss.xml',				array('statisticsModule','rss'));
-PluginController::bind('blog/post/([0-9]+)_(.*)',	array('statisticsModule','read_one'));
-PluginController::bind('blog/author/(.*)', 			array("statisticsModule",'search_by_author'));
-*/
-
-$nav = new NaviPage("Statistics",			"plugin_statistics_list");
-
-$nav->addChild(new NaviPage("PageViews",	"plugin_statistics_pageviews_list"));
+$nav = new NaviPage("Statistics",			false);
+$nav->addChild(new NaviPage("Page Views",	"plugin_statistics_pageviews_list"));
 
 PluginController::addAdminNavigation($nav);
 
