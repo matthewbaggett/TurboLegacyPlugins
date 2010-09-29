@@ -1,20 +1,39 @@
-function success(position){
-	alert("Position found: " + position.coords.latitude + " by " + position.coords.longitude);
+function turboGPSsuccess(position){
+	console.info("Position found: " + position.coords.latitude + " by " + position.coords.longitude);
+	$.post(
+		root_path + "/log-position", 
+		{
+			lat: position.coords.latitude, 
+			long: position.coords.longitude, 
+			requestid: request_id
+		}
+	);
 }
-function error(error){
+function turboGPSerror(error){
 	if(typeof msg == 'string'){
-		alert("err: " + error);
+		turboGPSfireerror("Error: \"" + error + "\"");
 	}else{
-		alert("Error happened, non-string");
+		turboGPSfireerror("Error happened, non-string");
 	}
+	
+}
+function turboGPSfireerror(error){
+	$.post(
+			root_path + "/log-position", 
+			{
+				error: error,  
+				requestid: request_id
+			}
+		);
+	console.warn(error);
 }
 $(document).ready(function(){
-	alert("dookie");
+	
 	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(success, error);
-		alert("supported");
+		navigator.geolocation.getCurrentPosition(turboGPSsuccess, turboGPSerror);
+		console.info("HTML5's geolocation supported");
 	} else {
-		alert('not supported');
+		turboGPSerror("HTML5 gelocation unsupported");
 	}
 
 });
