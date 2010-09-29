@@ -9,6 +9,10 @@ class statisticsBackendModule{
 	}
 	
 	function action_pageviews(){
+		
+		$responce = new PluginResponce();
+		$responce->pageTitle = "Statistics - Page views";
+		
 		$sql = "
 				SELECT count(p.id), p.*
 				FROM loggedpaths p
@@ -18,9 +22,15 @@ class statisticsBackendModule{
 		$results = DB::Query($sql,"Statistics Plugin - action_pageviews");
 		
 		while($row = DB::result_object($results)){
-			print_r($row);
+		//	print_r($row);
 		}
-		exit;
+		
+		$pageViewsXML = "Hi";
+		
+		$responce->xml.= CreateTag("Statistics",$pageViewsXML);
+		
+		return $responce;
+		
 	}
 }
 
