@@ -1,5 +1,6 @@
 function turboGPSsuccess(position){
 	//console.info("Position found: " + position.coords.latitude + " by " + position.coords.longitude);
+	$('.location').empty().append("Position found: " + position.coords.latitude + " by " + position.coords.longitude);
 	$.post(
 		gps_feed_location, 
 		{
