@@ -9,10 +9,10 @@ function turboGPSsuccess(position){
 			requestid: request_id
 		},
 		function(){
-			alert("Transmitted data");
+			//alert("Transmitted data");
 		}
 	);
-	alert("GPS success! At: " + position.coords.latitude + " by " + position.coords.longitude)
+	//alert("GPS success! At: " + position.coords.latitude + " by " + position.coords.longitude)
 }
 function turboGPSerror(error){
 	if(typeof msg == 'string'){

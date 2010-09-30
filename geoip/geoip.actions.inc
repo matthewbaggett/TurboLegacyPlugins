@@ -19,7 +19,7 @@ class geoipModule{
 			$oLoggedPath->setPostalCode($location->postal_code);
 			$oLoggedPath->setLatitude($location->latitude);
 			$oLoggedPath->setLongitude($location->longitude);
-			$oLoggedPath->setgeoipProcessed("1");
+			$oLoggedPath->setSource("pidgets");
 			$oLoggedPath->save();
 			
 		}
@@ -30,7 +30,7 @@ class geoipModule{
 		$oLoggedPath->loadByID($_POST['requestid']);
 		$oLoggedPath->setLatitude($_POST['lat']);
 		$oLoggedPath->setLongitude($_POST['long']);
-		$oLoggedPath->setgeoipProcessed("1");
+		$oLoggedPath->setSource("HTML5");
 		$oLoggedPath->save();
 		$oLoggedPath->reload();
 		print_r_html($oLoggedPath->getSimpleObject());
