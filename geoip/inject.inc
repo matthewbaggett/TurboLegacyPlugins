@@ -20,3 +20,4 @@ EVENTS::addEvent('cron_quarter',array(
 
 PluginController::bind('geoip_locate_html5', 	array('geoipModule','locate_html5'));
 PluginController::bind('geoip_locate_ips',		array('geoipModule','locate_ips'));
+

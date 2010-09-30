@@ -15,7 +15,8 @@ function turboGPSsuccess(position){
 			console.group("GPS Logged OK.");
 			console.log(data);
 			console.groupEnd();
-			$('.location')
+			alert(data);
+			$('.location_cell')
 				.append("Access: #" + "");
 		}
 	);
