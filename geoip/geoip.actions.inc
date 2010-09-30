@@ -26,6 +26,7 @@ class geoipModule{
 	}
 	
 	function action_locate_html5(){
+		fb::log("HTML5 GPS data recieved");
 		$oLoggedPath = new LoggedPath();
 		$oLoggedPath->loadByID($_POST['requestid']);
 		$oLoggedPath->setLatitude($_POST['lat']);
@@ -33,7 +34,8 @@ class geoipModule{
 		$oLoggedPath->setSource("HTML5");
 		$oLoggedPath->save();
 		$oLoggedPath->reload();
-		print_r_html($oLoggedPath->getSimpleObject());
+		fb::log($oLoggedPath->getSimpleObject());
+		echo json_encode($oLoggedPath->getSimpleObject());
 		exit;
 	}
 }

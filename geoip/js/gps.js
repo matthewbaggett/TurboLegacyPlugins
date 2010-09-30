@@ -1,6 +1,8 @@
 function turboGPSsuccess(position){
 	//console.info("Position found: " + position.coords.latitude + " by " + position.coords.longitude);
-	$('.location').empty().append("Position found: " + position.coords.latitude + " by " + position.coords.longitude);
+	$('.location_cell')
+		.empty()
+		.append("Position found: " + position.coords.latitude + " by " + position.coords.longitude + ". ");
 	$.post(
 		gps_feed_location, 
 		{
@@ -8,8 +10,13 @@ function turboGPSsuccess(position){
 			long: position.coords.longitude, 
 			requestid: request_id
 		},
-		function(){
-			//alert("Transmitted data");
+		function(dataJSON){
+			var data = jQuery.parseJSON(dataJSON);
+			console.group("GPS Logged OK.");
+			console.log(data);
+			console.groupEnd();
+			$('.location')
+				.append("Access: #" + "");
 		}
 	);
 	//alert("GPS success! At: " + position.coords.latitude + " by " + position.coords.longitude)
