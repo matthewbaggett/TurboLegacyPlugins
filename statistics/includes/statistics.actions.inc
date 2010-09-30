@@ -89,7 +89,7 @@ class statisticsModule{
 				if(TURBO::PluginAvailable('geoip')){
 					TURBO::add_js_var('request_id',$oRequest->getID());
 					TURBO::add_js_var('gps_feed_location',ROOTPATH."plugin/geoip_locate_html5");
-					TURBO::add_js_file("plugins/geoip/js/gps.js");
+					TURBO::add_js_file("/plugins/geoip/js/gps.js");
 				}
 		}
 		
