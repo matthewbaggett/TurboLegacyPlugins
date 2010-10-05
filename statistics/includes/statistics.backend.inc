@@ -1,5 +1,5 @@
 <?php
-echo "ohai";
+
 class statisticsBackendModule{
 	
 	public function __construct(){
