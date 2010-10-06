@@ -34,7 +34,7 @@ class METABOX_CURL {
 
      public function __construct($url,$followlocation = true,$timeOut = 30,$maxRedirecs = 4,$binaryTransfer = false,$includeHeader = false,$noBody = false) 
      { 
-     	 fb::log("METABOX_CURL: URL: $url");
+     	 
          $this->_url = $url; 
          $this->_followlocation = $followlocation; 
          $this->_timeout = $timeOut; 
@@ -77,6 +77,7 @@ class METABOX_CURL {
          $s = curl_init(); 
 
          curl_setopt($s,CURLOPT_URL,$this->_url); 
+         fb::log("METABOX_CURL: URL: {$this->_url}");
          curl_setopt($s,CURLOPT_HTTPHEADER,array('Expect:')); 
          curl_setopt($s,CURLOPT_TIMEOUT,$this->_timeout); 
          curl_setopt($s,CURLOPT_MAXREDIRS,$this->_maxRedirects); 
@@ -92,6 +93,9 @@ class METABOX_CURL {
          { 
              curl_setopt($s,CURLOPT_POST,true); 
              curl_setopt($s,CURLOPT_POSTFIELDS,$this->_postFields); 
+             fb::group("METABOX_CURL: POSTFIELDS:");
+             fb::log((array)$this->_postFields);
+             fb::groupEnd();
          } 
 
          if($this->_includeHeader) 
