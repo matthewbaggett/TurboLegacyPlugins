@@ -1,5 +1,6 @@
 <?php
 class geoipModule{	
+	function init(){}
 	function action_default(){
 		
 	}

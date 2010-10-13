@@ -9,6 +9,7 @@ chdir($myLocation);
 require_once("geoip.inc");
 require_once("geoip.actions.inc");
 
+HOOKS::bind("hook_plugins_init",array('geoipModule','init'));
 
 chdir($oldcwd);	//Move back to the old cwd.
 
