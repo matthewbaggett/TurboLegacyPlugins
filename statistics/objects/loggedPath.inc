@@ -63,6 +63,6 @@ class loggedPath extends turboObject{
 				"length"	=> 30
 			),
 		);
-		parent::__construct('loggedPaths',$this->arrTable);
+		parent::__construct('log_access',$this->arrTable);
 	}
 }
