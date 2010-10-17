@@ -6,6 +6,7 @@ class metaboxResponce{
 	public $query;
 	public $user;
 	public $image;
+	public $data;
 	
 	public $responce;
 	
@@ -15,6 +16,7 @@ class metaboxResponce{
 		$this->query['post'] 	= $_POST;
 		$this->query['get'] 	= $_GET;
 	}
+	
 	function crunch(){
 		global $availablePlugins;
 		$this->responce['server']			= CLUSTER_NODE;
@@ -29,6 +31,16 @@ class metaboxResponce{
 		}
 		if(is_object($this->image)){
 			$this->responce['image']			= $this->image->getSimpleObject();
+		}
+		if(is_object($this->data) || is_array($this->data)){
+			
+			foreach($this->data as $elem){
+				if(is_object($elem)){
+					$this->responce['data'][]			= $elem->getSimpleObject();
+				}else{
+					$this->responce['data'][]			= $elem;
+				}
+			}
 		}
 		return $this->responce;
 	}
