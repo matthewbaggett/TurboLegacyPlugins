@@ -117,7 +117,7 @@ class statisticsModule{
 		$headers = 'From: cron@'.$_SERVER['HTTP_HOST'] . "\r\n" .
     		'Reply-To: '.$admins[0]."\r\n" .
     		'X-Mailer: PHP/' . phpversion();
-		mail(TURBO::getAdminEmailsList(), $subject, $message, null);
+		TURBO::sendEmail($admins,"cron@".TURBO::getDomain(),$subject,$message);
 	}
 	
 }
