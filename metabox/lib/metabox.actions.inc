@@ -10,10 +10,26 @@ class metaboxModule{
 	}
 	
 	function action_push(){
-		$oUser = self::checkApiKey($_POST['apiKey']);
+		/*
+		 * Sanity checks
+		 */
+		
+		//Get API key
+		if(isset($_POST['apiKey'])){
+			$oUser = self::checkApiKey($_POST['apiKey']);
+		}elseif(isset($_GET['apiKey'])){
+			$oUser = self::checkApiKey($_GET['apiKey']);
+		}else{
+			return self::failure("APIKEY UNSPECIFIED");
+		}
+		//Check the user is valid.
 		if($oUser == false){
 			return self::failure("Invalid APIKEY",false);
 		}
+		/*
+		 * Completed sanity checks
+		 */
+		
 		//Build the new metabox responce up...
 		$responce = new metaboxResponce();
 		$responce->status = "APIKEY OKAY";
@@ -97,7 +113,9 @@ class metaboxModule{
 	}
 	
 	function action_seek(){
-		//Sanity checks
+		/*
+		 * Sanity checks
+		 */
 		
 		//Get API key
 		if(isset($_POST['apiKey'])){
@@ -107,6 +125,10 @@ class metaboxModule{
 		}else{
 			return self::failure("APIKEY UNSPECIFIED");
 		}
+		//Check the user is valid.
+		if($oUser == false){
+			return self::failure("Invalid APIKEY",false);
+		}
 		//Get keywords
 		if(isset($_POST['search'])){
 			$keywords = explode(",",$_POST['search']);
@@ -115,10 +137,10 @@ class metaboxModule{
 		}else{
 			return self::failure("SEARCH TERMS UNSPECIFIED");
 		}
+		/*
+		 * Completed sanity checks
+		 */
 		
-		if($oUser == false){
-			return self::failure("Invalid APIKEY",false);
-		}
 		//Build the new metabox responce up...
 		$responce = new metaboxResponce();
 		$responce->status = "APIKEY OKAY";
