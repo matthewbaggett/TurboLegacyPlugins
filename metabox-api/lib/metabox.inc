@@ -30,6 +30,10 @@ class METABOX{
 		if($responce = json_decode($curl->__tostring())){
 			return $responce;
 		}else{
+			fb::error("Responce from METABOX::UPLOAD not JSON");
+			fb::group("Responce");
+			fb::log($curl->__tostring());
+			fb::groupEnd();
 			throw new exception("Responce from METABOX::UPLOAD not JSON");
 		}
 	}
@@ -49,10 +53,9 @@ class METABOX{
 	}
 	
 	static public function search($keywords){
-		$curl = new METABOX_CURL(self::$server."search");
+		fb::group("Metabox - Search (".implode(", ",$keywords).")");
+		$curl = new METABOX_CURL(self::$server."search?apiKey=".self::$api_key."&search".implode(",",$keywords));
 		$postArray = array(
-			'apiKey' 		=> self::$api_key,
-			'search'		=> implode(",",$keywords),
 			'debug'			=> self::$debug
 		);
 		$curl->setPost($postArray);
@@ -60,7 +63,12 @@ class METABOX{
 		if($responce = json_decode($curl->__tostring())){
 			return $responce;
 		}else{
+			fb::error("Responce from METABOX::SEARCH not JSON");
+			fb::group("Responce");
+			fb::log($curl->__tostring());
+			fb::groupEnd();
 			throw new exception("Responce from METABOX::SEARCH not JSON\n\n\n"."<pre>{$curl->__tostring()}</pre>");
 		}
+		fb::groupEnd();
 	}
 }
