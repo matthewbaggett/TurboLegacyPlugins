@@ -6,8 +6,8 @@ $oldcwd = getcwd();	//Where is cwd now...
 $myLocation = dirname(__FILE__);	//Move to where we are right now...
 chdir($myLocation);
 
-require_once("lib/metabox.curl.inc");
-require_once("lib/metabox.inc");
+require_once("lib/metabox/metabox.curl.inc");
+require_once("lib/metabox/metabox.inc");
 
 fb::info("MetaboxAPI");
 
