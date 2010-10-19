@@ -44,9 +44,9 @@ class metaboxModule{
 		//Check the user has permission for the dataset
 		$permission = $oDataset->getPermission($oUser->getID());
 		if(!$oDataset->checkPermission($oUser,'write')){
-			return $this->failure("User does not have the required 'write' permission");
+			return $this->failure("User {$oUser->getUsername()} does not have the required 'write' permission");
 		}
-		//die("perm: {$permission}");		
+				
 		/*
 		 * Completed sanity checks
 		 */
@@ -174,6 +174,29 @@ class metaboxModule{
 		}else{
 			return self::failure("SEARCH TERMS UNSPECIFIED");
 		}
+		//Check the dataset is set
+		if(isset($_POST['dataset'])){
+			$dataset = $_POST['dataset'];
+		}elseif(isset($_GET['dataset'])){
+			$dataset = $_POST['dataset'];
+		}else{
+			$dataset = 'public-dataset';	//connect to the public dataset if dataset not set.
+		}
+		//Check the dataset is valid
+		try{
+			$oDataset = new dataset($dataset);
+			$datasetValid = true;
+		}catch(Exception $e){
+			return $this->failure("Dataset is not valid: $dataset");
+		}
+		//Check the user has permission for the dataset
+		$permission = $oDataset->getPermission($oUser->getID());
+		if(!$oDataset->checkPermission($oUser,'read')){
+			return $this->failure("User {$oUser->getUsername()} does not have the required 'read' permission");
+		}
+		if(!$oDataset->checkPermission($oUser,'seek')){
+			return $this->failure("User {$oUser->getUsername()} does not have the required 'seek' permission");
+		}
 		/*
 		 * Completed sanity checks
 		 */
@@ -186,7 +209,7 @@ class metaboxModule{
 		//Do the search for each keyword individually
 		
 		foreach($keywords as $keyword){
-			$keywordResults[$keyword] = metaboxModule::doSingleKeywordSeek($keyword);
+			$keywordResults[$keyword] = metaboxModule::doSingleKeywordSeek($keyword,$oDataset);
 		}
 		//Look for intersections
 		while (count($keywordResults) > 1) { 
@@ -203,7 +226,7 @@ class metaboxModule{
 		
 	}
 	
-	static private function doSingleKeywordSeek($keyword){
+	static private function doSingleKeywordSeek($keyword,$oDataset){
 		$sql = "
 			SELECT i.*
 			FROM mimages i
@@ -212,6 +235,7 @@ class metaboxModule{
 			JOIN mtags t
 			  ON t.id = r.tagid
 			WHERE t.value= '{$keyword}'
+			  AND i.datasetid = '{$oDataset->getID()}'
 			";
 		$result = DB::Query($sql);
 		while($row = DB::result_array($result)){

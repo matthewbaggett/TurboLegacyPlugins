@@ -48,6 +48,9 @@ class dataset extends turboObject{
 				if($oPermission->getWrite()){
 					$perms[] = 'write';
 				}
+				if($oPermission->getSeek()){
+					$perms[] = 'seek';
+				}
 				return implode(",",$perms);
 			}
 		}
@@ -55,9 +58,11 @@ class dataset extends turboObject{
 	}
 	public function checkPermission($oUser,$levelNeeded){
 		$permissions = $this->getPermission($oUser->getID());
-		if(array_search($levelNeeded,explode(",",$permissions))){
+		
+		if(array_search($levelNeeded,explode(",",$permissions)) !== FALSE){
 			return true;
 		}
+		
 		return false;
 	}
 	
@@ -75,6 +80,7 @@ class datasetPermissions extends turboObject{
 			"userid" 		=> array("type" => "int"),
 			"read"			=> array("type" => "bool"),
 			"write"			=> array("type" => "bool"),
+			"seek"			=> array("type" => "bool"),
 		);
 		parent::__construct('mdataset_permissions',$this->arrTable);
 	}	
