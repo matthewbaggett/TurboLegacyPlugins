@@ -178,7 +178,7 @@ class metaboxModule{
 		if(isset($_POST['dataset'])){
 			$dataset = $_POST['dataset'];
 		}elseif(isset($_GET['dataset'])){
-			$dataset = $_POST['dataset'];
+			$dataset = $_GET['dataset'];
 		}else{
 			$dataset = 'public-dataset';	//connect to the public dataset if dataset not set.
 		}
