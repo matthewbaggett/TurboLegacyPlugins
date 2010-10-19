@@ -26,6 +26,27 @@ class metaboxModule{
 		if($oUser == false){
 			return self::failure("Invalid APIKEY",false);
 		}
+		//Check the dataset is set
+		if(isset($_POST['dataset'])){
+			$dataset = $_POST['dataset'];
+		}elseif(isset($_GET['dataset'])){
+			$dataset = $_POST['dataset'];
+		}else{
+			$dataset = 'public-dataset';	//connect to the public dataset if dataset not set.
+		}
+		//Check the dataset is valid
+		try{
+			$oDataset = new dataset($dataset);
+			$datasetValid = true;
+		}catch(Exception $e){
+			return $this->failure("Dataset is not valid: $dataset");
+		}
+		//Check the user has permission for the dataset
+		$permission = $oDataset->getPermission($oUser->getID());
+		if(!$oDataset->checkPermission($oUser,'write')){
+			return $this->failure("User does not have the required 'write' permission");
+		}
+		//die("perm: {$permission}");		
 		/*
 		 * Completed sanity checks
 		 */
@@ -40,6 +61,21 @@ class metaboxModule{
 			//We download and analyse this one
 			$fileData = curl_file_get_contents($_POST['imageFile']);
 			$fileName = $_POST['imageFile'];
+			$fileSource = "scrape";
+			
+			$fileStorage = $this->writeImageToDisk($fileData,$fileName);
+			//If writing failed, we'd have got a metaboxResponce back
+			if(is_object($fileStorage) || is_array($fileStorage)){
+				//If $fileStorage is an Object/Array, its a metaboxResponce from failure.
+				return $fileStorage;
+			}else{
+				//Yay, file stored ok
+			}
+			
+		
+		}elseif($_POST['imageFileData']){	//File uploaded in the POST...
+			$fileData = $_POST['imageFileData'];
+			$fileName = $_POST['imageFileName'];
 			$fileSource = "scrape";
 			
 			$fileStorage = $this->writeImageToDisk($fileData,$fileName);
@@ -77,6 +113,7 @@ class metaboxModule{
 		$image->setSize($size);
 		$image->setSource($fileSource);
 		$image->setFile($fileStorage);
+		$image->setDatasetID($oDataset->getID());
 		//Commit the image to the DB
 		$image->save();
 		$responce->status = "OKAY";

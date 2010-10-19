@@ -8,6 +8,7 @@ chdir($myLocation);
 
 //Load objects
 require_once("objects/apikey.inc");
+require_once("objects/dataset.inc");
 require_once("objects/failure.inc");
 require_once("objects/image.inc");
 require_once("objects/relation.inc");

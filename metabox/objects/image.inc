@@ -12,6 +12,7 @@ class metabox_image extends turboObject{
 			"id" 		=> array("type" => "int",		"isKey" 	=> TRUE),
 			"uuid"		=> array("type"	=> "string",	"length"	=> 40),
 			"userid" 	=> array("type"	=> "int"),
+			"datasetid"	=> array("type" => "int"),
 			"source" 	=> array("type"	=> "text",		"length" 	=> STR_LEN_INF),
 			"md5" 		=> array("type"	=> "string",	"length"	=> 40),
 			"sha1" 		=> array("type"	=> "string",	"length"	=> 40),
