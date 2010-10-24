@@ -44,7 +44,7 @@ class metaboxModule{
 		//Check the user has permission for the dataset
 		$permission = $oDataset->getPermission($oUser->getID());
 		if(!$oDataset->checkPermission($oUser,'write')){
-			return $this->failure("User {$oUser->getUsername()} does not have the required 'write' permission");
+			return $this->failure("User {$oUser->getUsername()} does not have the required 'write' permission to database '{$oDataset->getName()}'.");
 		}
 				
 		/*
@@ -192,10 +192,10 @@ class metaboxModule{
 		//Check the user has permission for the dataset
 		$permission = $oDataset->getPermission($oUser->getID());
 		if(!$oDataset->checkPermission($oUser,'read')){
-			return $this->failure("User {$oUser->getUsername()} does not have the required 'read' permission");
+			return $this->failure("User {$oUser->getUsername()} does not have the required 'read' permission to database '{$oDataset->getName()}'.");
 		}
 		if(!$oDataset->checkPermission($oUser,'seek')){
-			return $this->failure("User {$oUser->getUsername()} does not have the required 'seek' permission");
+			return $this->failure("User {$oUser->getUsername()} does not have the required 'seek' permission to database '{$oDataset->getName()}'.");
 		}
 		/*
 		 * Completed sanity checks
