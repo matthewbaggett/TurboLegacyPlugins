@@ -23,7 +23,7 @@ EVENTS::addEvent('cron_day',array(
 );
 
 
-$nav = new NaviPage("Statistics",			false);
+$nav = new NaviPage("Statistics",			false,'plugins');
 $nav->addChild(new NaviPage("Page Views",	"plugin_statistics_pageviews"));
 
 PluginController::addAdminNavigation($nav);
