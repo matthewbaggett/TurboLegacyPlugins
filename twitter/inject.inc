@@ -15,7 +15,7 @@ chdir($oldcwd);	//Move back to the old cwd.
 PluginController::bind('test-twitter',								array('Tweet','test'));
 
 //Assemble Admin navigation elements
-$nav = new NaviPage("Twitter",false);
+$nav = new NaviPage("Twitter",false,'comments');
 $nav->addChild(new NaviPage("Feeds","plugin_twitter_feeds"));
 $nav->addChild(new NaviPage("Followers","plugin_twitter_list_followers"));
 $nav->addChild(new NaviPage("Configuration","plugin_twitter_config"));
