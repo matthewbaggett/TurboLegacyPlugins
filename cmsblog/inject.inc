@@ -21,7 +21,7 @@ PluginController::bind('blog/post/([0-9]+)_(.*)',	array('blogModule','read_one')
 PluginController::bind('blog/author/(.*)', 			array("blogModule",'search_by_author'));
 
 //Assemble Admin navigation elements
-$nav = new NaviPage("Blog",false);
+$nav = new NaviPage("Blog",false, 'pages');
 $nav->addChild(new NaviPage("New Post","plugin_blog_new"));
 $nav->addChild(new NaviPage("List Posts","plugin_blog_list"));
 
