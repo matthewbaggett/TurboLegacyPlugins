@@ -142,7 +142,7 @@ class metaboxModule{
 		//Try to tweet!
 		if(TURBO::PluginAvailable("Twitter")){
 			$oTweet = new Tweet();
-			$oTweet->message = "New image uploaded: ".basename($fileName).".";
+			$oTweet->message = "New object w/".count($aoTags)." tags: ".basename($fileName).".";
 			$oTweet->tweet();
 		}
 		//return the responce:
