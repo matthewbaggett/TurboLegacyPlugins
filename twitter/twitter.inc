@@ -1,14 +1,16 @@
 <?php 
-define("CONSUMER_KEY","FgEL4jVeBNDvXYSE6sqQg");
-define("CONSUMER_SECRET","4z1W8tr6ESPZVstub5uzskysa0iAOgq2t4a4rFqBuY");
+define("CONSUMER_KEY","j9YDC0nKfvQ73Ns9kMUiw");
+define("CONSUMER_SECRET","JFbcdj5HZJ5FpKAqg0yj8bJoKcti7sjqQcOq9iTb4E");
+
+define("OAUTH_TOKEN","193661288-gh4vhn71U585gcqoLVfQKNTVhetZKcxUCLRFzwS4");
+define("OAUTH_TOKEN_SECRET","0hVveJU8KF5tBlzohZ2wYWNT40YnqyhgfdX8XtjLI");
 
 class Tweet{
 	public $message;
 	
 	public function tweet(){
-		return;
-		$connection = $this->getConnectionWithAccessToken("94059844-xaVWoCzOk5BlUIEXHb4O0eIY4uAsY2RubNzefvF9G", "FGi8p6EXA8u0gZiWFOCvIaAcnMlQvOYFImrhRkemg");
-		$connection->post(
+		$connection = $this->getConnectionWithAccessToken(OAUTH_TOKEN, OAUTH_TOKEN_SECRET);
+		return $connection->post(
 				'statuses/update', 
 				array('status' => $this->message)
 			);
