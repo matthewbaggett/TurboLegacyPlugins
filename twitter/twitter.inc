@@ -6,6 +6,7 @@ class Tweet{
 	public $message;
 	
 	public function tweet(){
+		return;
 		$connection = $this->getConnectionWithAccessToken("94059844-xaVWoCzOk5BlUIEXHb4O0eIY4uAsY2RubNzefvF9G", "FGi8p6EXA8u0gZiWFOCvIaAcnMlQvOYFImrhRkemg");
 		$connection->post(
 				'statuses/update', 
