@@ -6,6 +6,7 @@ $oldcwd = getcwd();	//Where is cwd now...
 $myLocation = dirname(__FILE__);	//Move to where we are right now...
 chdir($myLocation);
 
+require_once("lib/abraham-twitteroauth/twitteroauth/twitteroauth.php");
 require_once("lib/twitter-api.inc");
 require_once("twitter.inc");
 
