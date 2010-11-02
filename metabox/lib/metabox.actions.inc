@@ -212,8 +212,10 @@ class metaboxModule{
 			$keywordResults[$keyword] = metaboxModule::doSingleKeywordSeek($keyword,$oDataset);
 		}
 		//Look for intersections
-		while (count($keywordResults) > 1) { 
-			$keywordResults[] = array_intersect_key(array_pop($keywordResults), array_pop($keywordResults));
+		if(count($keywords) > 1){
+			while (count($keywordResults) > 1) { 
+				$keywordResults[] = array_intersect_key(array_pop($keywordResults), array_pop($keywordResults));
+			}
 		}
 		$results = $keywordResults[0];
 		
