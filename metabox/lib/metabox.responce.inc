@@ -7,6 +7,7 @@ class metaboxResponce{
 	public $user;
 	public $image;
 	public $data;
+	public $debugArray;
 	
 	public $responce;
 	
@@ -41,6 +42,9 @@ class metaboxResponce{
 					$this->responce['data'][]			= $elem;
 				}
 			}
+		}
+		if($_POST['debug'] == 'ON'){
+			$this->responce['debugArray'] = $this->debugArray;
 		}
 		return $this->responce;
 	}

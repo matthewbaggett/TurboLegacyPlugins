@@ -217,12 +217,14 @@ class metaboxModule{
 				$keywordResults[] = array_intersect_key(array_pop($keywordResults), array_pop($keywordResults));
 			}
 		}
+		//print_r($keywordResults);
 		$results = $keywordResults[0];
 		
 		//Add them to the responce;
 		$responce->data = $results;
 		$responce->status = "OKAY";
 		$responce->statusString = "Search OK, ".count($results)." results.";
+		//$responce->debugArray['resultsRaw'] = $keywordResults;
 		//Return it.
 		return $responce->crunch();
 		
