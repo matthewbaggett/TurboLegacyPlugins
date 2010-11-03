@@ -18,10 +18,10 @@ PluginController::bind('statistics',				array('statisticsModule','default'));
 //Add plugin events...
 EVENTS::addEvent_EveryTime_Start(					array('statisticsModule','logThisRequest'));
 EVENTS::addEvent('cron_day',array(
-	'module'=>'statisticsModule',
-	'function'=>'action_clear_logs')
+		'module'=>'statisticsModule',
+		'function'=>'action_clear_logs'
+	)
 );
-
 
 $nav = new NaviPage("Statistics",			false,'plugins');
 $nav->addChild(new NaviPage("Page Views",	"plugin_statistics_pageviews"));
