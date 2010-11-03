@@ -138,13 +138,7 @@ class metaboxModule{
 		$image->reload();
 		//Add the image to the responce
 		$responce->image = $image;
-		
-		//Try to tweet!
-		if(TURBO::PluginAvailable("Twitter")){
-			$oTweet = new Tweet();
-			$oTweet->message = "New object w/".count($aoTags)." tags: ".$image->getFile().".";
-			$oTweet->tweet();
-		}
+
 		//return the responce:
 		return $responce->crunch();
 	}
