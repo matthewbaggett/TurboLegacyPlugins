@@ -25,12 +25,23 @@ PluginController::bind('push',								array('metaboxModule','push'));
 PluginController::bind('search',							array('metaboxModule','seek'));
 PluginController::bind('get/(.*)/(.*)/(.*)',		 		array("metaboxModule",'get'));
 PluginController::bind('batch/get', 						array("metaboxModule",'get_batch'));
-#PluginController::bind('twitter/hourly', 					array("metaboxStatisticsModule",'upload_statistics'));
+PluginController::bind('twitter/hourly', 					array("metaboxStatisticsModule",'upload_statistics'));
+PluginController::bind('twitter/daily',						array("metaboxStatisticsModule","daily_statistics"));
 
 //Add events
 EVENTS::addEvent('cron_hourly', array(
 		'module'=>'metaboxStatisticsModule',
-		'function'=>'uploadStatistics'
+		'function'=>'upload_statistics'
+	)
+);
+EVENTS::addEvent('cron_hour_14', array(
+		'module'=>'metaboxStatisticsModule',
+		'function'=>'daily_statistics'
+	)
+);
+EVENTS::addEvent('cron_hour_2', array(
+		'module'=>'metaboxStatisticsModule',
+		'function'=>'daily_statistics'
 	)
 );
 
