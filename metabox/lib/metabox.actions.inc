@@ -270,7 +270,7 @@ class metaboxModule{
 		}
 	}
 	
-	static private function failure($failure, $sendEmail = true){
+	static public function failure($failure, $sendEmail = true){
 		$loggedFail = new failureLog();
 		$loggedFail->setMessage($failure);
 		$failureLogNumber = $loggedFail->save();
