@@ -1,4 +1,12 @@
 <?php
+
+function first(&$array) {
+	if (!is_array($array)) return null;
+	if (!count($array)) return null;
+	reset($array);
+	return key($array);
+}
+
 class metaboxModule{
 	
 	public function __construct(){
@@ -203,7 +211,7 @@ class metaboxModule{
 		//Do the search for each keyword individually
 		
 		foreach($keywords as $keyword){
-			$keywordResults[$keyword] = metaboxModule::doSingleKeywordSeek($keyword,$oDataset);
+			$keywordResults[] = metaboxModule::doSingleKeywordSeek($keyword,$oDataset);
 		}
 		//Look for intersections
 		if(count($keywords) > 1){
@@ -211,14 +219,14 @@ class metaboxModule{
 				$keywordResults[] = array_intersect_key(array_pop($keywordResults), array_pop($keywordResults));
 			}
 		}
-		//print_r($keywordResults);
+
 		$results = $keywordResults[0];
-		
+
 		//Add them to the responce;
 		$responce->data = $results;
 		$responce->status = "OKAY";
 		$responce->statusString = "Search OK, ".count($results)." results.";
-		//$responce->debugArray['resultsRaw'] = $keywordResults;
+
 		//Return it.
 		return $responce->crunch();
 		
