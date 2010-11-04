@@ -24,6 +24,7 @@ require_once("lib/metabox.statistics.actions.inc");
 PluginController::bind('push',								array('metaboxModule','push'));
 PluginController::bind('search',							array('metaboxModule','seek'));
 PluginController::bind('get/(.*)/(.*)/(.*)',		 		array("metaboxModule",'get'));
+PluginController::bind('get_uuid/(.*)',		 				array("metaboxModule",'get_uuid'));
 PluginController::bind('batch/get', 						array("metaboxModule",'get_batch'));
 PluginController::bind('twitter/hourly', 					array("metaboxStatisticsModule",'upload_statistics'));
 PluginController::bind('twitter/daily',						array("metaboxStatisticsModule","daily_statistics"));

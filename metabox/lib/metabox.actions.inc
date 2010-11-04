@@ -232,6 +232,89 @@ class metaboxModule{
 		
 	}
 	
+	static public function action_get_uuid($vars){
+		$uuid = $vars[1];
+		/*
+		 * Sanity checks
+		 */
+		
+		//Get API key
+		if(isset($_POST['apiKey'])){
+			$oUser = self::checkApiKey($_POST['apiKey']);
+		}elseif(isset($_GET['apiKey'])){
+			$oUser = self::checkApiKey($_GET['apiKey']);
+		}else{
+			return self::failure("APIKEY UNSPECIFIED");
+		}
+		//Check the user is valid.
+		if($oUser == false){
+			return self::failure("Invalid APIKEY",false);
+		}
+		//Check the dataset is set
+		if(isset($_POST['dataset'])){
+			$dataset = $_POST['dataset'];
+		}elseif(isset($_GET['dataset'])){
+			$dataset = $_GET['dataset'];
+		}else{
+			$dataset = 'public-dataset';	//connect to the public dataset if dataset not set.
+		}
+		//Check the dataset is valid
+		try{
+			$oDataset = new dataset($dataset);
+			$datasetValid = true;
+		}catch(Exception $e){
+			return $this->failure("Dataset is not valid: $dataset");
+		}
+		//Check the user has permission for the dataset
+		$permission = $oDataset->getPermission($oUser->getID());
+		if(!$oDataset->checkPermission($oUser,'read')){
+			return $this->failure("User {$oUser->getUsername()} does not have the required 'read' permission to database '{$oDataset->getName()}'.");
+		}
+		if(!$oDataset->checkPermission($oUser,'seek')){
+			return $this->failure("User {$oUser->getUsername()} does not have the required 'seek' permission to database '{$oDataset->getName()}'.");
+		}
+		/*
+		 * Completed sanity checks
+		 */
+		
+		//Build the new metabox responce up...
+		$responce = new metaboxResponce();
+		$responce->status = "APIKEY OKAY";
+		$responce->user = $oUser;
+		
+		//Get the image requested
+		$image = self::doGetByUUID($uuid,$oDataset);
+		
+		//Add them to the responce;
+		$responce->data = array($image);
+		$responce->status = "OKAY";
+		$responce->statusString = "GET OK";
+
+		//Return it.
+		return $responce->crunch();
+		
+	}
+	
+	static private function doGetByUUID($uuid,$oDataset){
+		$uuid = DB::escape_string($uuid);
+		$sql = "
+			SELECT i.*
+			FROM mimages i
+			JOIN mrelation r
+			  ON r.imageid = i.id
+			JOIN mtags t
+			  ON t.id = r.tagid
+			WHERE i.uuid = '{$uuid}'
+			  AND i.datasetid = '{$oDataset->getID()}'
+			";
+		$result = DB::Query($sql);
+		while($row = DB::result_array($result)){
+			$oImage = new metabox_image();
+			$oImage->loadByRow($row);
+			return $oImage;
+		}
+		return self::failure("More than one entry for the uuid $uuid");
+	}
 	static private function doSingleKeywordSeek($keyword,$oDataset){
 		$sql = "
 			SELECT i.*
