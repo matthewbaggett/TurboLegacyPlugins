@@ -46,7 +46,11 @@ class metaboxResponce{
 		if($_POST['debug'] == 'ON'){
 			$this->responce['debugArray'] = $this->debugArray;
 		}
-		$this->responce['processingTime'] = microtime(true) - START_MTIME;
+		
+		if($_POST['debug'] == 'ON'){
+			$this->responce['processingTime'] = microtime(true) - START_MTIME;
+			$this->responce['version'] = $svn_version;
+		}
 		return $this->responce;
 	}
 	function getXML(){
