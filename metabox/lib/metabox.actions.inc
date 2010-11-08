@@ -44,11 +44,13 @@ class metaboxModule{
 		$responce->statusString = "SERVER APPEARS OKAY";
 		$responce->user = $oUser;
 		
-		$responce->data['$_SERVER'] = $_SERVER;
-		
+		$const = get_defined_constants(true);
+		$responce->data['CONSTANTS'] = $const['user'];
+		$responce->data['SERVER'] = $_SERVER;
 		//return the responce:
 		return $responce->crunch();
 	}
+	
 	function action_push(){
 		/*
 		 * Sanity checks
