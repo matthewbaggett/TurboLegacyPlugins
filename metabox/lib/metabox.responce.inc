@@ -46,6 +46,7 @@ class metaboxResponce{
 		if($_POST['debug'] == 'ON'){
 			$this->responce['debugArray'] = $this->debugArray;
 		}
+		$this->reponce['processingTime'] = microtime(true) - START_MTIME;
 		return $this->responce;
 	}
 	function getXML(){
