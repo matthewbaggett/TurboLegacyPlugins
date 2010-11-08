@@ -21,6 +21,7 @@ require_once("lib/metabox.responce.inc");
 require_once("lib/metabox.statistics.actions.inc");
 
 //Bind plugin routes...
+PluginController::bind("status",						array("metaboxModule","status"));
 PluginController::bind('push',								array('metaboxModule','push'));
 PluginController::bind('search',							array('metaboxModule','seek'));
 PluginController::bind('get/(.*)/(.*)/(.*)',		 		array("metaboxModule",'get'));

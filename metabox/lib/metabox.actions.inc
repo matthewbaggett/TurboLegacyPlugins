@@ -17,6 +17,38 @@ class metaboxModule{
 		
 	}
 	
+	function action_status(){
+		/*
+		 * Sanity checks
+		 */
+		
+		//Get API key
+		if(isset($_POST['apiKey'])){
+			$oUser = self::checkApiKey($_POST['apiKey']);
+		}elseif(isset($_GET['apiKey'])){
+			$oUser = self::checkApiKey($_GET['apiKey']);
+		}else{
+			return self::failure("APIKEY UNSPECIFIED");
+		}
+		//Check the user is valid.
+		if($oUser == false){
+			return self::failure("Invalid APIKEY",false);
+		}
+		/*
+		 * Completed sanity checks
+		 */
+		
+		//Build the new metabox responce up...
+		$responce = new metaboxResponce();
+		$responce->status = "OKAY";
+		$responce->statusString = "SERVER APPEARS OKAY";
+		$responce->user = $oUser;
+		
+		$responce->data['$_SERVER'] = $_SERVER;
+		
+		//return the responce:
+		return $responce->crunch();
+	}
 	function action_push(){
 		/*
 		 * Sanity checks
