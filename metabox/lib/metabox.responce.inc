@@ -49,6 +49,7 @@ class metaboxResponce{
 		
 		if($_POST['debug'] == 'ON'){
 			$this->responce['processingTime'] = microtime(true) - START_MTIME;
+			global $svn_version;
 			$this->responce['version'] = $svn_version;
 		}
 		return $this->responce;
