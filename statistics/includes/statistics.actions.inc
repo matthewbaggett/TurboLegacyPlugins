@@ -54,7 +54,7 @@ class statisticsModule{
 		
 	}
 	
-	function action_logThisRequest($args = null){
+	function action_log_this_request($args = null){
 		global $oFUser;	//Grab the FrontendUser object.
 		
 		$path 		= ltrim($_SERVER['REQUEST_URI'],"/");
@@ -93,6 +93,42 @@ class statisticsModule{
 				}
 		}
 		
+	}
+	
+	public function action_track_movement(){
+		$this->do_tracking_action(
+			array(
+				'request' 	=> $_SERVER['REQUEST_URI'],
+				'time'		=> microtime(true),
+				'post'		=> $_POST,
+				'get'		=> $_GET
+			)
+		);
+	}
+	
+	public function action_destroy_session(){
+		//print_r_html($_SERVER);die();
+		$this->do_tracking_action(
+			array(
+				'request' 	=> $_SERVER['REQUEST_URI'],
+				'time'		=> microtime(true),
+				'destroy_requested' => "YES"
+			)
+		);
+		session_destroy();
+		echo "SESSION DESTROYED";
+	}
+	
+	private function do_tracking_action($action){
+		if(isset($_SESSION['session_id'])){
+			$oMovement = new Movements($_SESSION['session_id']);
+		}else{
+			$oMovement = new Movements();
+		}
+		$_SESSION['movements'][] = $action;
+		$oMovement->setMovements(serialize($_SESSION['movements']));
+		$oMovement->save();
+		$_SESSION['session_id'] = $oMovement->getId();
 	}
 		
 

@@ -11,12 +11,16 @@ require_once("includes/statistics.actions.inc");
 require_once("includes/statistics.backend.inc");
 
 require_once("objects/loggedPath.inc");
+require_once("objects/movements.inc");
 
 //Bind plugin routes...
 PluginController::bind('statistics',				array('statisticsModule','default'));
+PluginController::bind('destroy_session',			array('statisticsModule','destroy_session'));
 
 //Add plugin events...
-EVENTS::addEvent_EveryTime_Start(					array('statisticsModule','logThisRequest'));
+EVENTS::addEvent_EveryTime_Start(					array('statisticsModule','log_this_request'));
+EVENTS::addEvent_EveryTime_Start(					array('statisticsModule','track_movement'));
+
 EVENTS::addEvent('cron_day',array(
 		'module'=>'statisticsModule',
 		'function'=>'action_clear_logs'

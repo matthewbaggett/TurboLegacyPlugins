@@ -22,10 +22,9 @@
 		<div class="prettycontainer">
 			<div class="prettyforms super-wide">
 				<h2 class="heading">Page view statistics</h2>
-				
+				<div id="pageviews_chart"><xsl:text> </xsl:text></div>
 			</div>
 		</div>
 		
 	</xsl:template>
-	
 </xsl:stylesheet>
