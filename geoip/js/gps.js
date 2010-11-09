@@ -43,8 +43,11 @@ function turboGPSfireerror(error){
 $(document).ready(function(){
 	
 	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(turboGPSsuccess, turboGPSerror);
-		//console.info("HTML5's geolocation supported");
+		try{
+			navigator.geolocation.getCurrentPosition(turboGPSsuccess, turboGPSerror);
+		}catch(err){
+			turboGPSerror("HTML5 geolocation failed: "+ err.description);
+		}
 	} else {
 		turboGPSerror("HTML5 gelocation unsupported");
 	}
