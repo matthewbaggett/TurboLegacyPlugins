@@ -113,7 +113,10 @@ class OFC_Chart
 
 	function toPrettyString()
 	{
-		return json_format( $this->toString() );
+		$foo = json_format( $this->toString() );
+		$foo = json_decode($foo);
+		$foo = json_encode($foo);
+		return $foo;
 	}
 }
 chdir($oldcwd);	//Move back to the old cwd.
