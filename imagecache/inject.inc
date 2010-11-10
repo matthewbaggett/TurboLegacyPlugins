@@ -11,6 +11,7 @@ require_once("lib/imagecache.inc");
 
 chdir($oldcwd);	//Move back to the old cwd.
 
+PluginController::bind('imagecache_process_cdn/([a-zA-Z0-9-_.,]+)/(.*)', 		array('imagecache','fetch_cdn'));
 PluginController::bind('imagecache_process/([a-zA-Z0-9-_.,]+)/(.*)', 		array('imagecache','fetch'));
 PluginController::bind('imagecache/(.*)', 		array('imagecache','fetch'));
 

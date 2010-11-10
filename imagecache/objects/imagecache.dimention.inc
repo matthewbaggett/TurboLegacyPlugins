@@ -31,7 +31,7 @@ class imagecache_dimention extends turboObject{
 				"effects": {
 					"type":		"text",
 					"length":	-1
-				},
+				}
 			}
 		';
 		$this->arrTable = json_decode($this->schema,true);
