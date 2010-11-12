@@ -6,11 +6,17 @@ $oldcwd = getcwd();	//Where is cwd now...
 $myLocation = dirname(__FILE__);	//Move to where we are right now...
 chdir($myLocation);
 
+require_once("includes/login.actions.inc");
 require_once("includes/registration.actions.inc");
 
 //Bind plugin routes...
 PluginController::bind('register',					array('registrationModule','default'));
 PluginController::bind('register/submit',				array('registrationModule','submit'));
 PluginController::bind('register/thankyou',				array('registrationModule','thankyou'));
+
+PluginController::bind("login",						array('loginModule','login'));
+PluginController::bind('login/submit',					array('loginModule','login_do'));
+
+EVENTS::addEvent_EveryTime_Start(					array('loginModule','login_check'));
 
 chdir($oldcwd);	//Move back to the old cwd.

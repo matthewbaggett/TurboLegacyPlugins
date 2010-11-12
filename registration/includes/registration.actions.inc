@@ -71,11 +71,10 @@ class registrationModule{
 		$result->pageTitle = "Thankyou :)";
 		$oThankyouCblock = new Cblock();
 		$oThankyouCblock->setContent(
-			"
+			'
 				<p>Thanks for registering!</p>
-				<p>You can now <a href=\"/plugin/login\">login in</a> to the users area.</p>
-				
-			");
+				<p>You can now <a href=/plugin/login>login in</a> to the users area.</p>
+			');
 		$result->xml .= CreateTag("Cblock",$oThankyouCblock->getXML());
 		return $result;
 	}
