@@ -23,4 +23,19 @@ class registrationModule{
 		
 		return $result;
 	}
+	
+	public function action_submit(){
+		$result = new PluginResponce();
+		//print_r_html($_POST);
+		$oUser = new User();
+		foreach($_POST as $key => $value){
+			$setter = "set".ucfirst($key);
+			$oUser->$setter($value);
+		}
+		$oUser->validate();
+		//print_r_html($oUser);die();
+		$form = $this->get_registration_form($oUser);
+		$result->xml = $form->getXML();
+		return $result;
+	}
 }
