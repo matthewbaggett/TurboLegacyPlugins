@@ -10,6 +10,7 @@ require_once("includes/registration.actions.inc");
 
 //Bind plugin routes...
 PluginController::bind('register',					array('registrationModule','default'));
-PluginController::bind('register/submit',			array('registrationModule','submit'));
+PluginController::bind('register/submit',				array('registrationModule','submit'));
+PluginController::bind('register/thankyou',				array('registrationModule','thankyou'));
 
 chdir($oldcwd);	//Move back to the old cwd.

@@ -17,9 +17,22 @@ class registrationModule{
 	public function action_default(){
 		$result = new PluginResponce();
 		$result->pageTitle = "Register a new user";
+		//Make the welcome block
+		$oWelcomeBlock = new Cblock();
+		$oWelcomeBlock->setContent(
+			"
+				<p>Thanks for registering!</p>
+				<p>You can now <a href=\"/plugin/login\">login in</a> to the users area.</p>
+				
+			");
 		
+		//Get the form object
 		$form = $this->get_registration_form(new User());
-		$result->xml = $form->getXML();
+		
+		//Build up the page in code	
+		$result->xml.= CreateTag("Cblock",$oWelcomeBlock->getXML());
+		$result->xml.= $form->getXML();
+		
 		
 		return $result;
 	}
@@ -32,10 +45,38 @@ class registrationModule{
 			$setter = "set".ucfirst($key);
 			$oUser->$setter($value);
 		}
-		$oUser->validate();
-		//print_r_html($oUser);die();
+		if($oUser->validate()){
+			//Validation Okay
+			$oUser->setPassword(hash("SHA1",$oUser->getPassword()));	
+			$oUser->setLevel(1);
+			$oUser->setActive(1);
+			$oUser->setRegisteredDate(time());
+			$oUser->save();
+			header("Location: thankyou");
+		}else{
+			//Validation Failed
+			print_r_html($_SESSION['turbo_form_errors']);
+			$result->pageTitle = "Oops! Cannot register, form incomplete";
+		}
+
 		$form = $this->get_registration_form($oUser);
-		$result->xml = $form->getXML();
+	
+		//Build up the page in code
+		$result->xml.= $form->getXML();
+		return $result;
+	}
+	
+	public function action_thankyou(){
+		$result = new PluginResponce();
+		$result->pageTitle = "Thankyou :)";
+		$oThankyouCblock = new Cblock();
+		$oThankyouCblock->setContent(
+			"
+				<p>Thanks for registering!</p>
+				<p>You can now <a href=\"/plugin/login\">login in</a> to the users area.</p>
+				
+			");
+		$result->xml .= CreateTag("Cblock",$oThankyouCblock->getXML());
 		return $result;
 	}
 }
