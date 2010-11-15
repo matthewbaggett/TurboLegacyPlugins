@@ -54,7 +54,7 @@ class registrationModule{
 			header("Location: thankyou");
 		}else{
 			//Validation Failed
-			print_r_html($_SESSION['turbo_form_errors']);
+			//print_r_html($_SESSION['turbo_form_errors']);
 			$result->pageTitle = "Oops! Cannot register, form incomplete";
 		}
 
