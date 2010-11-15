@@ -29,7 +29,16 @@ class loginModule{
 		$result = new PluginResponce();
 		$result->pageTitle = "Login:";
 		
+		$oRegisterBlock = new Cblock();
+		$oRegisterBlock->setContent(
+			"
+
+				<p>You can now <a href=/plugin/register>register </a> for the users area.</p>
+				
+			");
+				
 		$form = $this->get_login_form(new User());
+		$result->xml.= CreateTag("Cblock",$oRegisterBlock->getXML());
 		$result->xml.= $form->getXML();
 		return $result;
 	}

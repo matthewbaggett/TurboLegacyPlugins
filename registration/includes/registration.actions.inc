@@ -21,8 +21,7 @@ class registrationModule{
 		$oWelcomeBlock = new Cblock();
 		$oWelcomeBlock->setContent(
 			"
-				<p>Thanks for registering!</p>
-				<p>You can now <a href=\"/plugin/login\">login in</a> to the users area.</p>
+				<p>Please complete the below form to register for a user account. Email address is mandatory, you may be asked to click a link in an email to verify your account.</p>
 				
 			");
 		
