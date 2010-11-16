@@ -57,6 +57,7 @@ class loginModule{
 	}
 	
 	public function action_login_check(){
+	fb::log("login check");
 		if($_SESSION['logged_in_visitor']){
 			visitor::$user_object = new User();
 			visitor::$user_object->loadByUsername($_SESSION['logged_in_visitor']);
