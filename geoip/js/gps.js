@@ -41,7 +41,7 @@ function turboGPSfireerror(error){
 	//console.warn(error);
 }
 $(document).ready(function(){
-	
+	/*
 	if (navigator.geolocation) {
 		try{
 			navigator.geolocation.getCurrentPosition(turboGPSsuccess, turboGPSerror);
@@ -51,5 +51,6 @@ $(document).ready(function(){
 	} else {
 		turboGPSerror("HTML5 gelocation unsupported");
 	}
+	*/
 
 });
