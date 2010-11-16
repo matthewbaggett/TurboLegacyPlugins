@@ -96,12 +96,14 @@ class statisticsModule{
 	}
 	
 	public function action_track_movement(){
+		fb::log("movement tracking");
 		$this->do_tracking_action(
 			array(
 				'request' 	=> $_SERVER['REQUEST_URI'],
 				'time'		=> microtime(true),
 				'post'		=> $_POST,
-				'get'		=> $_GET
+				'get'		=> $_GET,
+				'user'		=> visitor::$user_object
 			)
 		);
 	}
@@ -130,8 +132,6 @@ class statisticsModule{
 		$oMovement->save();
 		$_SESSION['session_id'] = $oMovement->getId();
 	}
-		
-
 	
 	function action_clear_logs($args = null){
 		$oRequest = new loggedPath();

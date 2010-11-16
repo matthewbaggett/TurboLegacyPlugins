@@ -19,7 +19,7 @@ class Movements extends turboObject{
 			)
 			
 		);
-		parent::__construct('movements',$this->arrTable);
+		parent::__construct('log_movements',$this->arrTable);
 		if($id_to_load !== FALSE){
 			$this->loadById($id_to_load);
 		}
