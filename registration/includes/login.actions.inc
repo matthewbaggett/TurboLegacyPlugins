@@ -61,13 +61,21 @@ class loginModule{
 			visitor::$user_object = new User();
 			visitor::$user_object->loadByUsername($_SESSION['logged_in_visitor']);
 		}else{
-			visitor::$user_object = null;
+			visitor::$user_object = new User();
+			visitor::$user_object->setUsername("Guest");
+			visitor::$user_object->setFirstname("Guest");
+			visitor::$user_object->setSurname("User");
+			visitor::$user_object->setLevel(-1);
 		}
+		global $extra_hook_xml;
+		
+		$extra_hook_xml = CreateTag("Visitor",visitor::$user_object->getXML());
 	}
 	
-	public function action_logout(){
+	public function action_logout_do(){
 		$_SESSION['logged_in_visitor'] = null;
 		unset($_SESSION['logged_in_visitor']);
 		header("Location: /");
 	}
+	
 }

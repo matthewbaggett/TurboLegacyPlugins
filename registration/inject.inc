@@ -16,6 +16,7 @@ PluginController::bind('register/thankyou',				array('registrationModule','thank
 
 PluginController::bind("login",						array('loginModule','login'));
 PluginController::bind('login/submit',					array('loginModule','login_do'));
+PluginController::bind('logout',					array('loginModule','logout_do'));
 
 EVENTS::addEvent_EveryTime_Start(					array('loginModule','login_check'));
 
