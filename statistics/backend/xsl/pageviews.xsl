@@ -22,7 +22,7 @@
 		<div class="prettycontainer">
 			<div class="prettyforms super-wide">
 				<h2 class="heading">Page view statistics</h2>
-				<div id="pageviews_chart"><xsl:text> </xsl:text></div>
+				<div id="pageviews_chart"><span id="chart-replace">Chart would go here if you had flash!</span></div>
 			</div>
 		</div>
 		
