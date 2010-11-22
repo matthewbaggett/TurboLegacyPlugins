@@ -1,6 +1,6 @@
 <?php
 
-class metabox_image extends turboObject{
+class metabox_image extends turboShardedObject{
 	
 	public $image;
 	public $user;
