@@ -12,6 +12,7 @@ class cdn{
 			return $cdn_cache[$md5];
 		}else{
 			return FALSE;
+		}
 	}
 	public function get_link_from_file($file_location){
 		$md5 = md5_sum($file_location);
