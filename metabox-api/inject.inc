@@ -9,6 +9,6 @@ chdir($myLocation);
 require_once("lib/metabox/metabox.curl.inc");
 require_once("lib/metabox/metabox.inc");
 
-fb::info("MetaboxAPI");
+fb::info("MetaboxAPI is present");
 
 chdir($oldcwd);	//Move back to the old cwd.
