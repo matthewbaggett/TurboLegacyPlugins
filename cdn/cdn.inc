@@ -17,9 +17,9 @@ class cdn{
 	//Prime various componants before use...
 	public function action_prime(){
 		//Prime the connection to the metabox...
-		METABOX::$server 	= "http://h.indexi.eu.org/";
-		METABOX::$api_key	= "ac1e18f848";
-		METABOX::$dataset	= "eclipsephoto";
+		METABOX::$server 	= turbo_get_setting("METABOX_SERVER");
+		METABOX::$api_key	= turbo_get_setting("METABOX_API_KEY");
+		METABOX::$dataset	= turbo_get_setting("METABOX_DATASET");
 		METABOX::$debug		= "ON";
 		
 		cdn::$cdn_cache = array();
