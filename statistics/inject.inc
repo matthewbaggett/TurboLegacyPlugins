@@ -18,7 +18,9 @@ PluginController::bind('statistics',				array('statisticsModule','default'));
 PluginController::bind('destroy_session',			array('statisticsModule','destroy_session'));
 
 //Add plugin events...
-EVENTS::addEvent_EveryTime_Start(					array('statisticsModule','log_this_request'));
+if(turbo_get_setting("GEOIP_HTML5") == "ENABLED"){
+	EVENTS::addEvent_EveryTime_Start(					array('statisticsModule','log_this_request'));
+}
 EVENTS::addEvent_EveryTime_Start(					array('statisticsModule','track_movement'));
 
 EVENTS::addEvent('cron_day',array(
