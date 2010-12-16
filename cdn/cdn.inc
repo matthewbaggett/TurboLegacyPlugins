@@ -41,6 +41,30 @@ class cdn{
 			$obj = unserialize($cache_file->object);
 		}
 	}
+	public function action_pulldown(){
+		foreach(cdn::$cdn_cache as $cdn_cache_item){
+			$cdn_cache_item->object_unpacked = unserialize($cdn_cache_item->object);
+			print_r_html($cdn_cache_item);
+			echo "Testing to see if {$cdn_cache_item->path} exists...";
+			if(file_exists($cdn_cache_item->path)){
+//				echo "Nothing to do, file present<br />";
+			}else{
+				echo "Pull down, file missing... <br />";
+				$file = "http://static.indexi.eu.org/{$cdn_cache_item->object_unpacked->file}";
+				echo "Pulling from '$file'... ";
+				$data = curl_file_get_contents($file);
+
+				if(strlen($data) > 0){
+					echo strlen($data)." bytes OK<br />\n";
+					echo "In ".getcwd()."<br />\n";
+					@mkdir(dirname($cdn_cache_item->path),0777,true);
+					file_put_contents($cdn_cache_item->path,$data);
+				}else{
+					echo "FAIL! Cannot download file!<br />";
+				}
+			}
+		}
+	}
 	
 	public function push_to_cdn($file){
 		HOOKS::call("CDN_PUSH_TO_CDN");
