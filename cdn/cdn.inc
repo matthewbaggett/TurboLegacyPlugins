@@ -26,6 +26,18 @@ class cdn{
 	}
 	//Check that the CDN is a mirror of our /data directory
 	public function action_mirror(){
+		/*
+		 * Check all our local files are in the CDN
+		 */
+		$this->action_pushup();
+		
+		/*
+		 * Check the we have all the files from the CDN
+		 */
+		$this->action_pulldown();
+	}
+	
+	public function action_pushup(){
 		$directory_listing = $this->scan_directory("../data/files");
 		fb::warn($directory_listing);
 		foreach($directory_listing as $file){
@@ -37,33 +49,48 @@ class cdn{
 			}
 		}
 		
-		foreach(cdn::$cdn_cache as $cache_file){
-			$obj = unserialize($cache_file->object);
-		}
+		//foreach(cdn::$cdn_cache as $cache_file){
+		//	$obj = unserialize($cache_file->object);
+		//}
 	}
+	
 	public function action_pulldown(){
+
+		$responce = new PluginResponce();
+		$responce->pageTitle = 'CDN Pulldown (Forced)';
+		$responce->xsl = 'general.xsl';
+		
 		foreach(cdn::$cdn_cache as $cdn_cache_item){
+
+			$cblock_content = "";
 			$cdn_cache_item->object_unpacked = unserialize($cdn_cache_item->object);
-			print_r_html($cdn_cache_item);
-			echo "Testing to see if {$cdn_cache_item->path} exists...";
+			//$cblock_content.= "<blockquote><pre>".sprint_r($cdn_cache_item)."</pre></blockquote>\n";
+			$cblock_content.= "<p>Testing to see if {$cdn_cache_item->path} exists... ";
 			if(file_exists($cdn_cache_item->path)){
-//				echo "Nothing to do, file present<br />";
+				$cblock_content.= "Nothing to do, file present</p>\n";
 			}else{
-				echo "Pull down, file missing... <br />";
+				$cblock_content.= "File missing, trigger pulldown</p>\n";
+				$cblock_content.= "<p>Pull down:<br />\n";
 				$file = "http://static.indexi.eu.org/{$cdn_cache_item->object_unpacked->file}";
-				echo "Pulling from '$file'... ";
+				$cblock_content.= "Pulling from '$file'... \n";
 				$data = curl_file_get_contents($file);
 
 				if(strlen($data) > 0){
-					echo strlen($data)." bytes OK<br />\n";
-					echo "In ".getcwd()."<br />\n";
+					$cblock_content.= "".strlen($data)." bytes OK</p>\n";
 					@mkdir(dirname($cdn_cache_item->path),0777,true);
 					file_put_contents($cdn_cache_item->path,$data);
 				}else{
-					echo "FAIL! Cannot download file!<br />";
+
+					$cblock_content.= "FAIL! Cannot download file!</p>\n";
 				}
 			}
+			$cblock = new Cblock();
+			$cblock->setContent($cblock_content);
+			$responce->xml .= CreateTag("Cblock",$cblock->getXML());
 		}
+		
+		return $responce;
+		
 	}
 	
 	public function push_to_cdn($file){
