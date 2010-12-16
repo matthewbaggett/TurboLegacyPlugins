@@ -18,7 +18,8 @@ EVENTS::addEvent('cron_quarter',array(
 	'function'=>'action_locate_ips')
 );
 
-
-PluginController::bind('geoip_locate_html5', 	array('geoipModule','locate_html5'));
-PluginController::bind('geoip_locate_ips',		array('geoipModule','locate_ips'));
+if(turbo_get_setting("GEOIP_HTML5") == "ENABLED"){
+	PluginController::bind('geoip_locate_html5', 		array('geoipModule','locate_html5'));
+	PluginController::bind('geoip_locate_ips',		array('geoipModule','locate_ips'));
+}
 
