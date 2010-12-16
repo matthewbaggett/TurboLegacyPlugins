@@ -66,7 +66,7 @@ class cdn{
 			$cdn_cache_item->object_unpacked = unserialize($cdn_cache_item->object);
 			//$cblock_content.= "<blockquote><pre>".sprint_r($cdn_cache_item)."</pre></blockquote>\n";
 			$cblock_content.= "<p>Testing to see if {$cdn_cache_item->path} exists... ";
-			if(file_exists($cdn_cache_item->path)){
+			if(file_exists(FS_ROOT.$cdn_cache_item->path)){
 				$cblock_content.= "Nothing to do, file present</p>\n";
 			}else{
 				$cblock_content.= "File missing, trigger pulldown</p>\n";
@@ -77,8 +77,8 @@ class cdn{
 
 				if(strlen($data) > 0){
 					$cblock_content.= "".strlen($data)." bytes OK</p>\n";
-					@mkdir(dirname($cdn_cache_item->path),0777,true);
-					file_put_contents($cdn_cache_item->path,$data);
+					@mkdir(dirname(FS_ROOT.$cdn_cache_item->path),0777,true);
+					file_put_contents(FS_ROOT.$cdn_cache_item->path,$data);
 				}else{
 
 					$cblock_content.= "FAIL! Cannot download file!</p>\n";
