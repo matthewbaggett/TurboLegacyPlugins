@@ -102,15 +102,16 @@ class cdn{
 			$oFile = new File();
 			try{
 				$oFile->loadBySpecial('disklocation',$file);
+				$oImage = new Image();
+				$oImage->loadBySpecial('fileobjectid',$oFile->getId());
+				$cdn_obj = $m_responce->image;
+				$cdn_obj_serialized = serialize($cdn_obj);
+				$sql = "INSERT INTO `cache_cdn` (`image_id`, `path`, `object`) VALUES ('{$oImage->getId()}', '{$file}', '{$cdn_obj_serialized}')";
+				DB::Query($sql);
 			}catch(Exception $e){
 				//Ignore it.
 			}
-			$oImage = new Image();
-			$oImage->loadBySpecial('fileobjectid',$oFile->getId());
-			$cdn_obj = $m_responce->image;
-			$cdn_obj_serialized = serialize($cdn_obj);
-			$sql = "INSERT INTO `cache_cdn` (`image_id`, `path`, `object`) VALUES ('{$oImage->getId()}', '{$file}', '{$cdn_obj_serialized}')";
-			DB::Query($sql);
+			
 		}
 	}
 	
