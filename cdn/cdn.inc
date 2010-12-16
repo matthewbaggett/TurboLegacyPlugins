@@ -65,7 +65,7 @@ class cdn{
 			$cblock_content = "";
 			$cdn_cache_item->object_unpacked = unserialize($cdn_cache_item->object);
 			//$cblock_content.= "<blockquote><pre>".sprint_r($cdn_cache_item)."</pre></blockquote>\n";
-			$local_path = trim(FS_ROOT,"/").ltrim($cdn_cache_item->path,".");
+			$local_path = rtrim(FS_ROOT,"/").ltrim($cdn_cache_item->path,".");
 			$cblock_content.= "<p>Testing to see if {$local_path} exists... ";
 			if(file_exists($local_path)){
 				$cblock_content.= "Nothing to do, file present</p>\n";
