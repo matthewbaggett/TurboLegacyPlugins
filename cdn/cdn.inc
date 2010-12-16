@@ -100,7 +100,11 @@ class cdn{
 			throw new exception("There was a CDN fault :( Contact Grey/Matt");
 		}else{
 			$oFile = new File();
-			$oFile->loadBySpecial('disklocation',$file);
+			try{
+				$oFile->loadBySpecial('disklocation',$file);
+			}catch(Exception $e){
+				//Ignore it.
+			}
 			$oImage = new Image();
 			$oImage->loadBySpecial('fileobjectid',$oFile->getId());
 			$cdn_obj = $m_responce->image;
