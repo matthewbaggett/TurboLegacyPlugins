@@ -38,8 +38,9 @@ class cdn{
 	}
 	
 	public function action_pushup(){
-		$directory_listing = $this->scan_directory("../data/files");
-		fb::warn($directory_listing);
+		$data_directory = FS_ROOT."data/files";
+		$directory_listing = $this->scan_directory($data_directory);
+		fb::info($directory_listing,"Listing of files found in data directory '{$data_directory}'");
 		foreach($directory_listing as $file){
 			if(isset(cdn::$cdn_cache[$file])){
 				//file is in CDN
@@ -95,24 +96,37 @@ class cdn{
 	}
 	
 	public function push_to_cdn($file){
-		HOOKS::call("CDN_PUSH_TO_CDN");
-		$m_responce = METABOX::upload_file($file);
-		if($m_responce->status != 'OKAY'){
-			throw new exception("There was a CDN fault :( Contact Grey/Matt");
-		}else{
-			$oFile = new File();
-			try{
-				$oFile->loadBySpecial('disklocation',$file);
-				$oImage = new Image();
-				$oImage->loadBySpecial('fileobjectid',$oFile->getId());
-				$cdn_obj = $m_responce->image;
-				$cdn_obj_serialized = serialize($cdn_obj);
-				$sql = "INSERT INTO `cache_cdn` (`image_id`, `path`, `object`) VALUES ('{$oImage->getId()}', '{$file}', '{$cdn_obj_serialized}')";
-				DB::Query($sql);
-			}catch(Exception $e){
-				//Ignore it.
-			}
+		$checkExistsQuery = new TurboQuery("SELECT","files");
+		$checkExistsQuery->addColumn("count(id) as found");
+		$checkExistsQuery->addWhere("disklocation","=",$file);
+		$result = $checkExistsQuery->execute();
+		if((int) $result[0]->found > 0){
+			HOOKS::call("CDN_PUSH_TO_CDN");
+			$m_responce = METABOX::upload_file($file);
+			if($m_responce->status != 'OKAY'){
+				throw new exception("There was a CDN fault :( Contact Grey/Matt");
+			}else{
+				$oFile = new File();
+				try{
+					fb::log("Trying to load the file for the file with a disklocation of $file");
+					//check if the file exists in our DB
+				
+					$oFile->loadBySpecial('disklocation',$file);
+					$oImage = new Image();
+					$oImage->loadBySpecial('fileobjectid',$oFile->getId());
+					$cdn_obj = $m_responce->image;
+					$cdn_obj_serialized = serialize($cdn_obj);
+					$sql = "INSERT INTO `cache_cdn` (`image_id`, `path`, `object`) VALUES ('{$oImage->getId()}', '{$file}', '{$cdn_obj_serialized}')";
+					DB::Query($sql);
+					
+				}catch(Exception $e){
+					//Ignore it.
+				
+				}
 			
+			}
+		}else{
+			fb::warn("File $file found on the filesystem is NOT in the database");
 		}
 	}
 	
