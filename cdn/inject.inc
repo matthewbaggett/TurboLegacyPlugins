@@ -17,4 +17,8 @@ if(turbo_get_setting("CDN_ENABLE") == "ON"){
 	HOOKS		::bind		("HOOK_START",		array('cdn','action_load_cdn_cache'));
 	HOOKS		::bind		("HOOK_START",		array('cdn','action_mirror'));
 	PluginController::bind		('force_cdn_pulldown',	array('cdn','pulldown'));
+	EVENTS::addEvent('cron_quarter',array(
+		'module'=>'cdn',
+		'function'=>'action_pulldown')
+	);
 }
