@@ -96,21 +96,25 @@ class statisticsModule{
 	}
 	
 	public function action_track_movement(){
-		fb::log("movement tracking");
-		if(class_exists("visitor")){
-			$visitor = visitor::$user_object;
-		}else{
-			$visitor = null;
+		try{
+			fb::log("movement tracking");
+			if(class_exists("visitor")){
+				$visitor = visitor::$user_object;
+			}else{
+				$visitor = null;
+			}
+			$this->do_tracking_action(
+				array(
+					'request' 	=> $_SERVER['REQUEST_URI'],
+					'time'		=> microtime(true),
+					'post'		=> $_POST,
+					'get'		=> $_GET,
+					'user'		=> $visitor
+				)
+			);
+		}catch(Exception $e){
+			fb::error($e, "There was an exception encountered while logging this user");
 		}
-		$this->do_tracking_action(
-			array(
-				'request' 	=> $_SERVER['REQUEST_URI'],
-				'time'		=> microtime(true),
-				'post'		=> $_POST,
-				'get'		=> $_GET,
-				'user'		=> $visitor
-			)
-		);
 	}
 	
 	public function action_destroy_session(){
