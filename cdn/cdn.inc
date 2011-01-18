@@ -45,7 +45,9 @@ class cdn{
 		$data_directory = "../data/files";
 		$directory_listing = $this->scan_directory($data_directory);
 		fb::info($directory_listing,"Listing of files found in data directory '{$data_directory}'");
-		//print_r_html($directory_listing);
+		if(php_sapi_name() == 'cli'){
+			print_r($directory_listing);
+		}
 		//die();
 		foreach($directory_listing as $file){
 			if(isset(cdn::$cdn_cache[$file])){
@@ -106,16 +108,26 @@ class cdn{
 		$checkExistsQuery->addColumn("count(id) as found");
 		$checkExistsQuery->addWhere("disklocation","=",$file);
 		fb::log("checkExistsQuery = ".$checkExistsQuery->query());
+		if(php_sapi_name() == 'cli'){
+			echo "checkExistsQuery = ".$checkExistsQuery->query()."\n";
+		}
 		$result = $checkExistsQuery->execute();
 		if((int) $result[0]->found > 0){
 			HOOKS::call("CDN_PUSH_TO_CDN");
 			$m_responce = METABOX::upload_file($file);
 			if($m_responce->status != 'OKAY'){
+				if(php_sapi_name() == 'cli'){
+					echo "There was a CDN fault\n";
+				}
 				throw new exception("There was a CDN fault :( Contact Grey/Matt");
 			}else{
 				$oFile = new File();
 				try{
 					fb::log("Trying to load the file for the file with a disklocation of $file");
+					"Trying to load the file for the file with a disklocation of $file"
+					if(php_sapi_name() == 'cli'){
+						echo "Trying to load the file for the file with a disklocation of $file";
+					}
 					//check if the file exists in our DB
 				
 					$oFile->loadBySpecial('disklocation',$file);
@@ -134,6 +146,9 @@ class cdn{
 			}
 		}else{
 			fb::warn("File $file found on the filesystem is NOT in the database");
+			if(php_sapi_name() == 'cli'){
+				echo "File $file found on the filesystem is NOT in the database";
+			}
 		}
 	}
 	
