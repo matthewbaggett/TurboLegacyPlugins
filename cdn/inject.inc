@@ -10,7 +10,7 @@ require_once("objects/cdn_hosted_image.inc");
 require_once("cdn.inc");
 chdir($oldcwd);	//Move back to the old cwd.
 
-if(turbo_get_setting("CDN_ENABLE") == "ON"){
+if(turbo_get_setting("CDN_ENABLE") == "ON" || 1==1){
 	EVENTS		::addEvent	('cron_day',		array('cdn','action_mirror'));
 	HOOKS		::bind		("CMS_IMAGE_SAVE",	array('cdn','action_mirror'));
 	HOOKS		::bind		("HOOK_START",		array('cdn','action_prime'));

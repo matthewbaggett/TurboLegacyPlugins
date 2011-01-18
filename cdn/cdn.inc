@@ -4,6 +4,7 @@ class cdn{
 	static $cdn_cache;
 	//Get the CDN cache. This is the contents of a table that explains what is in the cache already.
 	public function action_load_cdn_cache(){
+		fb::log("CDN::action_load_cdn_cache()");
 		$query = new TurboQuery("SELECT","cache_cdn");
 		$results = $query->execute();
 		$results_keyed = array();
@@ -16,24 +17,27 @@ class cdn{
 	}
 	//Prime various componants before use...
 	public function action_prime(){
+		fb::log("CDN::action_prime(): Priming the connection to Metabox");
 		//Prime the connection to the metabox...
 		METABOX::$server 	= turbo_get_setting("METABOX_SERVER");
 		METABOX::$api_key	= turbo_get_setting("METABOX_API_KEY");
 		METABOX::$dataset	= turbo_get_setting("METABOX_DATASET");
 		METABOX::$debug		= "ON";
-		
 		cdn::$cdn_cache = array();
 	}
 	//Check that the CDN is a mirror of our /data directory
 	public function action_mirror(){
+		fb::log("CDN::action_mirror(): Mirror to/from Metabox");
 		/*
 		 * Check all our local files are in the CDN
 		 */
+		fb::log("CDN::action_mirror(): Push up...");
 		$this->action_pushup();
 		
 		/*
 		 * Check the we have all the files from the CDN
 		 */
+		fb::log("CDN::action_mirror(): Pull down...");
 		$this->action_pulldown();
 	}
 	
