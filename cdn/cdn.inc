@@ -124,7 +124,7 @@ class cdn{
 				$oFile = new File();
 				try{
 					fb::log("Trying to load the file for the file with a disklocation of $file");
-					"Trying to load the file for the file with a disklocation of $file"
+					
 					if(php_sapi_name() == 'cli'){
 						echo "Trying to load the file for the file with a disklocation of $file";
 					}
