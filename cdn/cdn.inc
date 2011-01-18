@@ -103,6 +103,7 @@ class cdn{
 		$checkExistsQuery = new TurboQuery("SELECT","files");
 		$checkExistsQuery->addColumn("count(id) as found");
 		$checkExistsQuery->addWhere("disklocation","=",$file);
+		fb::log("checkExistsQuery = ".$checkExistsQuery->query());
 		$result = $checkExistsQuery->execute();
 		if((int) $result[0]->found > 0){
 			HOOKS::call("CDN_PUSH_TO_CDN");
