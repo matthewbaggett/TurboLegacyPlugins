@@ -11,6 +11,7 @@ require_once("cdn.inc");
 chdir($oldcwd);	//Move back to the old cwd.
 
 if(turbo_get_setting("CDN_ENABLE") == "ON"){
+	fb::info("CDN plugin is installed, is ENABLED");
 	EVENTS		::addEvent	('cron_day',		array('cdn','action_mirror'));
 	HOOKS		::bind		("CMS_IMAGE_SAVE",	array('cdn','action_mirror'));
 	HOOKS		::bind		("HOOK_START",		array('cdn','action_prime'));
@@ -21,4 +22,5 @@ if(turbo_get_setting("CDN_ENABLE") == "ON"){
 		'module'=>'cdn',
 		'function'=>'action_pulldown')
 	);
-}
+}else{
+	fb::warn("CDN plugin is installed, is DISABLED");
