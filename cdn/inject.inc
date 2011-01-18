@@ -24,3 +24,4 @@ if(turbo_get_setting("CDN_ENABLE") == "ON"){
 	);
 }else{
 	fb::warn("CDN plugin is installed, is DISABLED");
+}
