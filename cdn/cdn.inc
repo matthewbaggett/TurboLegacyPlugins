@@ -42,9 +42,11 @@ class cdn{
 	}
 	
 	public function action_pushup(){
-		$data_directory = FS_ROOT."data/files";
+		$data_directory = "../data/files";
 		$directory_listing = $this->scan_directory($data_directory);
 		fb::info($directory_listing,"Listing of files found in data directory '{$data_directory}'");
+		//print_r_html($directory_listing);
+		//die();
 		foreach($directory_listing as $file){
 			if(isset(cdn::$cdn_cache[$file])){
 				//file is in CDN
